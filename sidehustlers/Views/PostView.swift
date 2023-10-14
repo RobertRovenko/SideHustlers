@@ -16,7 +16,7 @@ struct PostView: View {
         NavigationView {
             VStack {
                 Text("Post Screen Content")
-                //The content of your home screen here
+               
                 Spacer()
             }
         }

@@ -15,7 +15,7 @@ struct HomeView: View {
         NavigationView {
             VStack {
                 Text("Home Screen Content")
-                //The content of your home screen here
+               
                 Spacer()
             }
         }

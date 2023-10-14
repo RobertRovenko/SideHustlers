@@ -7,18 +7,28 @@
 
 import Foundation
 import SwiftUI
-
+import Firebase
+import FirebaseAuth
 
 struct ProfileView: View {
     @Binding var selectedTab: Int
-
+    @Binding var isAuthViewPresented: Bool
+    
     var body: some View {
         NavigationView {
             VStack {
-                Text("Profile Screen Content")
-                //The content of your home screen here
-                Spacer()
+                Button("Log Out") {
+                    do {
+                        try Auth.auth().signOut()
+                      
+                        isAuthViewPresented = true
+                    } catch {
+                        print("Error signing out: \(error.localizedDescription)")
+                    }
+                }
             }
+            .padding()
+            Spacer()
         }
     }
 }

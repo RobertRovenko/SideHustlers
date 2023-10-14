@@ -16,7 +16,7 @@ struct FinderView: View {
         NavigationView {
             VStack {
                 Text("Finder Screen Content")
-                //The content of your home screen here
+              
                 Spacer()
             }
         }

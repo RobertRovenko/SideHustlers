@@ -27,6 +27,7 @@
 		DA62F3912ADAA0E0009189EB /* PostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA62F3902ADAA0E0009189EB /* PostView.swift */; };
 		DA62F3932ADAA0EF009189EB /* FinderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA62F3922ADAA0EF009189EB /* FinderView.swift */; };
 		DA62F3952ADAA0FB009189EB /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA62F3942ADAA0FB009189EB /* ProfileView.swift */; };
+		DA62F3972ADAAA14009189EB /* AuthenticationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA62F3962ADAAA14009189EB /* AuthenticationView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +64,7 @@
 		DA62F3902ADAA0E0009189EB /* PostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostView.swift; sourceTree = "<group>"; };
 		DA62F3922ADAA0EF009189EB /* FinderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinderView.swift; sourceTree = "<group>"; };
 		DA62F3942ADAA0FB009189EB /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		DA62F3962ADAAA14009189EB /* AuthenticationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -120,6 +122,7 @@
 		DA62F34F2ADA8E1A009189EB /* sidehustlers */ = {
 			isa = PBXGroup;
 			children = (
+				DA62F3982ADAABB2009189EB /* Model */,
 				DA62F38B2ADAA006009189EB /* Views */,
 				DA62F3502ADA8E1A009189EB /* sidehustlersApp.swift */,
 				DA62F3522ADA8E1A009189EB /* ContentView.swift */,
@@ -163,8 +166,16 @@
 				DA62F3902ADAA0E0009189EB /* PostView.swift */,
 				DA62F3922ADAA0EF009189EB /* FinderView.swift */,
 				DA62F3942ADAA0FB009189EB /* ProfileView.swift */,
+				DA62F3962ADAAA14009189EB /* AuthenticationView.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		DA62F3982ADAABB2009189EB /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -316,6 +327,7 @@
 				DA62F3912ADAA0E0009189EB /* PostView.swift in Sources */,
 				DA62F3932ADAA0EF009189EB /* FinderView.swift in Sources */,
 				DA62F3952ADAA0FB009189EB /* ProfileView.swift in Sources */,
+				DA62F3972ADAAA14009189EB /* AuthenticationView.swift in Sources */,
 				DA62F3512ADA8E1A009189EB /* sidehustlersApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

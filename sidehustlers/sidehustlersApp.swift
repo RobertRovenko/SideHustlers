@@ -7,6 +7,8 @@
 
 import SwiftUI
 import FirebaseCore
+import FirebaseAuth
+import Combine
 
 class AppDelegate: NSObject, UIApplicationDelegate {
   func application(_ application: UIApplication,
@@ -16,6 +18,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
     return true
   }
 }
+
 
 @main
 struct sidehustlersApp: App {
