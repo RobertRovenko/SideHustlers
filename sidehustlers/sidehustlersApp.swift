@@ -23,11 +23,13 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 @main
 struct sidehustlersApp: App {
     
+    @StateObject private var choreViewModel = ChoreViewModel()
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environmentObject(choreViewModel)
         }
     }
 }

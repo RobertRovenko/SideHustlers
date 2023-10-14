@@ -13,12 +13,13 @@ struct ContentView: View {
     @State private var selectedTab = 0
     @State private var isUserLoggedIn = false
     @State private var isAuthViewPresented = false
+    @StateObject private var choreViewModel = ChoreViewModel()
 
     var body: some View {
         NavigationView {
             if isUserLoggedIn {
                 TabView(selection: $selectedTab) {
-                    HomeView(selectedTab: $selectedTab)
+                    HomeView(selectedTab: $selectedTab,  choreViewModel: choreViewModel)
                         .tabItem {
                             Image(systemName: "house.fill")
                             Text("Home")

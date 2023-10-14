@@ -28,6 +28,8 @@
 		DA62F3932ADAA0EF009189EB /* FinderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA62F3922ADAA0EF009189EB /* FinderView.swift */; };
 		DA62F3952ADAA0FB009189EB /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA62F3942ADAA0FB009189EB /* ProfileView.swift */; };
 		DA62F3972ADAAA14009189EB /* AuthenticationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA62F3962ADAAA14009189EB /* AuthenticationView.swift */; };
+		DA62F39C2ADACFFB009189EB /* Chores.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA62F39B2ADACFFB009189EB /* Chores.swift */; };
+		DA62F3A02ADAD2B7009189EB /* ChoreViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA62F39F2ADAD2B7009189EB /* ChoreViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,6 +67,8 @@
 		DA62F3922ADAA0EF009189EB /* FinderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinderView.swift; sourceTree = "<group>"; };
 		DA62F3942ADAA0FB009189EB /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		DA62F3962ADAAA14009189EB /* AuthenticationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationView.swift; sourceTree = "<group>"; };
+		DA62F39B2ADACFFB009189EB /* Chores.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chores.swift; sourceTree = "<group>"; };
+		DA62F39F2ADAD2B7009189EB /* ChoreViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChoreViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -174,6 +178,8 @@
 		DA62F3982ADAABB2009189EB /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				DA62F39B2ADACFFB009189EB /* Chores.swift */,
+				DA62F39F2ADAD2B7009189EB /* ChoreViewModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -326,8 +332,10 @@
 				DA62F3532ADA8E1A009189EB /* ContentView.swift in Sources */,
 				DA62F3912ADAA0E0009189EB /* PostView.swift in Sources */,
 				DA62F3932ADAA0EF009189EB /* FinderView.swift in Sources */,
+				DA62F39C2ADACFFB009189EB /* Chores.swift in Sources */,
 				DA62F3952ADAA0FB009189EB /* ProfileView.swift in Sources */,
 				DA62F3972ADAAA14009189EB /* AuthenticationView.swift in Sources */,
+				DA62F3A02ADAD2B7009189EB /* ChoreViewModel.swift in Sources */,
 				DA62F3512ADA8E1A009189EB /* sidehustlersApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
