@@ -26,7 +26,7 @@ struct ContentView: View {
                         }
                         .tag(0)
 
-                    MessagesView(selectedTab: $selectedTab)
+                    MessagesView(selectedTab: $selectedTab, currentContact: "John Doe")
                         .tabItem {
                             Image(systemName: "message.fill")
                             Text("Messages")

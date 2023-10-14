@@ -14,12 +14,13 @@ struct Chore: Identifiable, Encodable {
     var title: String
     var description: String
     var reward: Int
-
+    var createdBy: String
    
-    init(title: String, description: String, reward: Int) {
+    init(title: String, description: String, reward: Int, createdBy: String) {
         self.id = UUID().uuidString
         self.title = title
         self.description = description
         self.reward = reward
+        self.createdBy = createdBy
     }
 }

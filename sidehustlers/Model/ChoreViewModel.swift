@@ -18,17 +18,21 @@ class ChoreViewModel: ObservableObject {
         fetchChores()
     }
 
-    func addChore(chore: Chore) {
+    func addChore(chore: Chore, createdBy: String) {
         do {
             let encoder = JSONEncoder()
             let choreData = try encoder.encode(chore)
-            let choreDictionary = try JSONSerialization.jsonObject(with: choreData, options: []) as! [String: Any]
+            var choreDictionary = try JSONSerialization.jsonObject(with: choreData, options: []) as! [String: Any]
+            
+           
+            choreDictionary["createdBy"] = createdBy
+            
             _ = try db.collection("chores").addDocument(data: choreDictionary)
+            
         } catch {
             print("Error adding chore: \(error)")
         }
     }
-
 
 
     func fetchChores() {
@@ -44,8 +48,9 @@ class ChoreViewModel: ObservableObject {
                 if let choreData = document.data() as? [String: Any],
                    let title = choreData["title"] as? String,
                    let description = choreData["description"] as? String,
-                   let reward = choreData["reward"] as? Int {
-                    let chore = Chore(title: title, description: description, reward: reward)
+                   let reward = choreData["reward"] as? Int,
+                   let createdBy = choreData["createdBy"] as? String {
+                    let chore = Chore(title: title, description: description, reward: reward, createdBy: createdBy)
                     fetchedChores.append(chore)
                 }
             }
@@ -55,5 +60,9 @@ class ChoreViewModel: ObservableObject {
         }
     }
 
+    
+    func addContact(_ contact: String) {
+      
+    }
 
 }
