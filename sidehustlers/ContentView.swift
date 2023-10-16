@@ -17,7 +17,7 @@ struct ContentView: View {
     @State private var contacts: [String] = []
 
 
-    
+    @StateObject private var userSettings = UserSettings()
     
     var body: some View {
         NavigationView {
@@ -53,7 +53,7 @@ struct ContentView: View {
                         }
                         .tag(3)
 
-                    ProfileView(selectedTab: $selectedTab, isAuthViewPresented: $isAuthViewPresented)
+                    ProfileView(selectedTab: $selectedTab, isAuthViewPresented: $isAuthViewPresented, userSettings: userSettings  )
                         .tabItem {
                             Image(systemName: "person.fill")
                             Text("Profile")
@@ -68,7 +68,7 @@ struct ContentView: View {
             }
         }
         .fullScreenCover(isPresented: $isAuthViewPresented) {
-            AuthentictionView(isAuthViewPresented: $isAuthViewPresented, isUserLoggedIn: $isUserLoggedIn )
+            AuthentictionView(isAuthViewPresented: $isAuthViewPresented, isUserLoggedIn: $isUserLoggedIn, userSettings: userSettings )
         }
         .onAppear {
             isUserLoggedIn = Auth.auth().currentUser != nil

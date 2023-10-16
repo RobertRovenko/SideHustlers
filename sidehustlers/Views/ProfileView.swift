@@ -14,20 +14,18 @@ struct ProfileView: View {
     @Binding var isAuthViewPresented: Bool
     @State private var isDarkThemeEnabled = false
     @State private var isNotificationsEnabled = true
-    
+    @State private var showAlert = false
+    @State private var alertType: AlertType? = nil
+    @State private var alertMessage = ""
+
     enum AlertType {
         case logOut
         case deleteAccount
     }
     
-    var userEmail: String? {
-        return Auth.auth().currentUser?.email
-    }
-
-    @State private var showAlert = false
-    @State private var alertType: AlertType? = nil
-    @State private var alertMessage = ""
-
+    @State private var userEmail: String = "Welcome!"
+    @ObservedObject var userSettings: UserSettings
+   
     
     var body: some View {
         NavigationView {
@@ -35,7 +33,7 @@ struct ProfileView: View {
                 
                 Spacer()
                 
-                Text(userEmail ?? "User's Name")
+                Text(userSettings.userEmail) // Display the user's email from UserSettings
                     .font(.title)
                 
                 
@@ -95,6 +93,12 @@ struct ProfileView: View {
                 secondaryButton: .cancel()
             )
         }
+        .onAppear {
+                    // Fetch the user's email and update the @State variable
+                    if let storedEmail = UserDefaults.standard.string(forKey: "userEmail") {
+                        userEmail = storedEmail
+                    }
+                }
     }
 }
 
@@ -123,8 +127,10 @@ func deleteAccount(isAuthViewPresented: Binding<Bool>) {
 func logOut(isAuthViewPresented: Binding<Bool>) {
     do {
         try Auth.auth().signOut()
+        UserDefaults.standard.removeObject(forKey: "userEmail") 
         isAuthViewPresented.wrappedValue = true
     } catch {
         print("Error signing out: \(error.localizedDescription)")
     }
 }
+

@@ -13,7 +13,8 @@ struct AuthentictionView: View {
     @State private var password = ""
     @Binding var isAuthViewPresented: Bool
     @Binding var isUserLoggedIn: Bool
-
+    @ObservedObject var userSettings: UserSettings
+    
     var body: some View {
         NavigationView {
             VStack {
@@ -49,15 +50,20 @@ struct AuthentictionView: View {
                 }
 
                 Button("Log In") {
-                    Auth.auth().signIn(withEmail: email, password: password) { authResult, error in
-                        if let error = error {
-                            print("Error logging in: \(error.localizedDescription)")
-                        } else {
-                            isUserLoggedIn = true
-                            isAuthViewPresented = false
-                        }
-                    }
-                }
+                       Auth.auth().signIn(withEmail: email, password: password) { authResult, error in
+                           if let error = error {
+                               print("Error logging in: \(error.localizedDescription)")
+                           } else {
+                               if let user = Auth.auth().currentUser {
+                                   UserDefaults.standard.set(user.email, forKey: "userEmail")
+                                   userSettings.updateEmail(user.email ?? "") // Update the email
+                               }
+                               isUserLoggedIn = true
+                               isAuthViewPresented = false
+                           }
+                       }
+                   }
+
             }
             .padding()
             Spacer()
