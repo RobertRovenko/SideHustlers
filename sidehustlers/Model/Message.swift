@@ -11,7 +11,7 @@ struct Message: Identifiable {
     var id: String
     var sender: String
     var content: String
-    var timestamp: Date // You can use a Date for the message timestamp
+    var timestamp: Date 
 
     init(id: String, sender: String, content: String, timestamp: Date) {
         self.id = id

@@ -19,6 +19,10 @@ struct ProfileView: View {
         case logOut
         case deleteAccount
     }
+    
+    var userEmail: String? {
+        return Auth.auth().currentUser?.email
+    }
 
     @State private var showAlert = false
     @State private var alertType: AlertType? = nil
@@ -31,8 +35,8 @@ struct ProfileView: View {
                 
                 Spacer()
                 
-                Text("User's Name")
-                    .font(.largeTitle)
+                Text(userEmail ?? "User's Name")
+                    .font(.title)
                 
                 
                 Spacer()

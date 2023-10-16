@@ -14,19 +14,23 @@ struct ContentView: View {
     @State private var isUserLoggedIn = false
     @State private var isAuthViewPresented = false
     @StateObject private var choreViewModel = ChoreViewModel()
+    @State private var contacts: [String] = []
 
+
+    
+    
     var body: some View {
         NavigationView {
             if isUserLoggedIn {
                 TabView(selection: $selectedTab) {
-                    HomeView(selectedTab: $selectedTab,  choreViewModel: choreViewModel)
+                    HomeView(selectedTab: $selectedTab, choreViewModel: choreViewModel, contacts: $contacts)
                         .tabItem {
                             Image(systemName: "house.fill")
                             Text("Home")
                         }
                         .tag(0)
 
-                    MessagesView(selectedTab: $selectedTab, currentContact: "John Doe")
+                    MessagesView(selectedTab: $selectedTab, contacts: $contacts)
                         .tabItem {
                             Image(systemName: "message.fill")
                             Text("Messages")

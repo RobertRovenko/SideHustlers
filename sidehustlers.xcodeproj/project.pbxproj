@@ -31,6 +31,8 @@
 		DA62F3972ADAAA14009189EB /* AuthenticationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA62F3962ADAAA14009189EB /* AuthenticationView.swift */; };
 		DA62F39C2ADACFFB009189EB /* Chores.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA62F39B2ADACFFB009189EB /* Chores.swift */; };
 		DA62F3A02ADAD2B7009189EB /* ChoreViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA62F39F2ADAD2B7009189EB /* ChoreViewModel.swift */; };
+		DAAEDA4F2ADC78CF00B0BD47 /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAAEDA4E2ADC78CF00B0BD47 /* Contact.swift */; };
+		DAAEDA512ADC791300B0BD47 /* ContactViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAAEDA502ADC791300B0BD47 /* ContactViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -71,6 +73,8 @@
 		DA62F3962ADAAA14009189EB /* AuthenticationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationView.swift; sourceTree = "<group>"; };
 		DA62F39B2ADACFFB009189EB /* Chores.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chores.swift; sourceTree = "<group>"; };
 		DA62F39F2ADAD2B7009189EB /* ChoreViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChoreViewModel.swift; sourceTree = "<group>"; };
+		DAAEDA4E2ADC78CF00B0BD47 /* Contact.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Contact.swift; sourceTree = "<group>"; };
+		DAAEDA502ADC791300B0BD47 /* ContactViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -183,6 +187,8 @@
 				DA62F39B2ADACFFB009189EB /* Chores.swift */,
 				DA62F39F2ADAD2B7009189EB /* ChoreViewModel.swift */,
 				DA0516CF2ADB478700A31629 /* Message.swift */,
+				DAAEDA4E2ADC78CF00B0BD47 /* Contact.swift */,
+				DAAEDA502ADC791300B0BD47 /* ContactViewModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -330,6 +336,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DAAEDA4F2ADC78CF00B0BD47 /* Contact.swift in Sources */,
 				DA62F38F2ADAA031009189EB /* MessagesView.swift in Sources */,
 				DA62F38D2ADAA01C009189EB /* HomeView.swift in Sources */,
 				DA62F3532ADA8E1A009189EB /* ContentView.swift in Sources */,
@@ -341,6 +348,7 @@
 				DA62F3972ADAAA14009189EB /* AuthenticationView.swift in Sources */,
 				DA62F3A02ADAD2B7009189EB /* ChoreViewModel.swift in Sources */,
 				DA62F3512ADA8E1A009189EB /* sidehustlersApp.swift in Sources */,
+				DAAEDA512ADC791300B0BD47 /* ContactViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
