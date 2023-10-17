@@ -31,6 +31,9 @@ struct HomeView: View {
                 HStack {
                     Text("Available Tasks")
                         .frame(maxWidth: .infinity, alignment: .leading)
+                        .font(.headline)
+                        .fontWeight(.bold)
+                        .foregroundColor(.primary)
                     Spacer()
                 }
                 .padding()

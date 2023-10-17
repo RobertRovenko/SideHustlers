@@ -17,7 +17,7 @@ struct ProfileView: View {
     @State private var showAlert = false
     @State private var alertType: AlertType? = nil
     @State private var alertMessage = ""
-
+    
     enum AlertType {
         case logOut
         case deleteAccount
@@ -25,20 +25,14 @@ struct ProfileView: View {
     
     @State private var userEmail: String = "Welcome!"
     @ObservedObject var userSettings: UserSettings
-   
     
     var body: some View {
         NavigationView {
             VStack {
-                
                 Spacer()
-                
-                Text(userSettings.userEmail) // Display the user's email from UserSettings
+                Text(userEmail) // Display the user's email from UserSettings
                     .font(.title)
-                
-                
                 Spacer()
-                
                 Toggle(isOn: $isDarkThemeEnabled) {
                     Text("Dark Theme")
                         .font(.headline)
@@ -56,14 +50,12 @@ struct ProfileView: View {
                 Spacer()
                 
                 HStack {
-                    
                     Button("Log Out") {
                         alertType = .logOut
                         alertMessage = "Are you sure you want to log out?"
                         showAlert = true
                     }
                     .padding()
-                    
                     
                     Button("Delete Account") {
                         alertType = .deleteAccount
@@ -72,13 +64,11 @@ struct ProfileView: View {
                     }
                     .padding()
                     .foregroundColor(.red)
-                    
                 }
                 .padding()
             }
             .padding()
         }
-        
         .alert(isPresented: $showAlert) {
             Alert(
                 title: Text("Confirmation"),
@@ -94,32 +84,31 @@ struct ProfileView: View {
             )
         }
         .onAppear {
-                    // Fetch the user's email and update the @State variable
-                    if let storedEmail = UserDefaults.standard.string(forKey: "userEmail") {
-                        userEmail = storedEmail
-                    }
-                }
+            if let storedEmail = UserDefaults.standard.string(forKey: "userEmail") {
+                userEmail = storedEmail
+            } else if let user = Auth.auth().currentUser {
+                userEmail = user.email ?? "Welcome!"
+                UserDefaults.standard.set(userEmail, forKey: "userEmail")
+            }
+        }
     }
 }
 
-
 func deleteAccount(isAuthViewPresented: Binding<Bool>) {
     let user = Auth.auth().currentUser
-
+    
     user?.delete { error in
         if let error = error {
             print("Error deleting account: \(error.localizedDescription)")
-           
         } else {
             print("Account deleted successfully")
-          
             do {
                 try Auth.auth().signOut()
-                    isAuthViewPresented.wrappedValue = true
-                } catch {
-                    print("Error signing out: \(error.localizedDescription)")
-                }
-           
+                UserDefaults.standard.removeObject(forKey: "userEmail")
+                isAuthViewPresented.wrappedValue = true
+            } catch {
+                print("Error signing out: \(error.localizedDescription)")
+            }
         }
     }
 }
@@ -127,10 +116,9 @@ func deleteAccount(isAuthViewPresented: Binding<Bool>) {
 func logOut(isAuthViewPresented: Binding<Bool>) {
     do {
         try Auth.auth().signOut()
-        UserDefaults.standard.removeObject(forKey: "userEmail") 
+        UserDefaults.standard.removeObject(forKey: "userEmail") //Clear the stored email
         isAuthViewPresented.wrappedValue = true
     } catch {
         print("Error signing out: \(error.localizedDescription)")
     }
 }
-

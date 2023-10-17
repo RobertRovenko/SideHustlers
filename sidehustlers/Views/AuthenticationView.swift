@@ -7,7 +7,6 @@
 import SwiftUI
 import Firebase
 import FirebaseAuth
-
 struct AuthentictionView: View {
     @State private var email = ""
     @State private var password = ""
@@ -23,13 +22,13 @@ struct AuthentictionView: View {
                     .autocapitalization(.none)
                 SecureField("Password", text: $password)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
-
+                
                 Button("Sign Up") {
                     Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
                         if let error = error {
                             print("Error signing up: \(error.localizedDescription)")
                         } else {
-                            //User is signed up, save their profile to Firestore
+                            // User is signed up, save their profile to Firestore
                             let user = Auth.auth().currentUser
                             let db = Firestore.firestore()
                             if let user = user {
@@ -39,31 +38,44 @@ struct AuthentictionView: View {
                                     if let error = error {
                                         print("Error saving user profile: \(error.localizedDescription)")
                                     } else {
-                                        //User profile saved, update authentication state
+                                        // User profile saved, update authentication state
                                         isAuthViewPresented = false
                                         isUserLoggedIn = true
+                                        
+                                        // Update user email in UserDefaults and userSettings
+                                        UserDefaults.standard.set(user.email, forKey: "userEmail")
+                                        userSettings.updateEmail(user.email ?? "")
                                     }
                                 }
                             }
                         }
                     }
                 }
-
+                
                 Button("Log In") {
-                       Auth.auth().signIn(withEmail: email, password: password) { authResult, error in
-                           if let error = error {
-                               print("Error logging in: \(error.localizedDescription)")
-                           } else {
-                               if let user = Auth.auth().currentUser {
-                                   UserDefaults.standard.set(user.email, forKey: "userEmail")
-                                   userSettings.updateEmail(user.email ?? "") // Update the email
-                               }
-                               isUserLoggedIn = true
-                               isAuthViewPresented = false
-                           }
-                       }
-                   }
-
+                    do {
+                        try Auth.auth().signOut() // Sign out the current user
+                        UserDefaults.standard.removeObject(forKey: "userEmail") // Clear the stored email
+                        userSettings.updateEmail("Welcome") // Set email to "Welcome" as a default
+                        isUserLoggedIn = false // Update the authentication state
+                        
+                        Auth.auth().signIn(withEmail: email, password: password) { authResult, error in
+                            if let error = error {
+                                print("Error logging in: \(error.localizedDescription)")
+                            } else {
+                                if let user = Auth.auth().currentUser {
+                                    // Update user email in UserDefaults and userSettings
+                                    UserDefaults.standard.set(user.email, forKey: "userEmail")
+                                    userSettings.updateEmail(user.email ?? "")
+                                }
+                                isUserLoggedIn = true
+                                isAuthViewPresented = false
+                            }
+                        }
+                    } catch {
+                        print("Error signing out: \(error.localizedDescription)")
+                    }
+                }
             }
             .padding()
             Spacer()
