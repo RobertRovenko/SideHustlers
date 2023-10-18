@@ -19,8 +19,23 @@ struct AuthenticationView: View {
     var body: some View {
         NavigationView {
             VStack {
-                Spacer()
-
+              
+                ZStack {
+                    GeometryReader { geometry in
+                        Color.clear
+                            .frame(maxHeight: geometry.size.height * 0.7)
+                        }
+                        Image("SideHustlersIcon")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(height: 275)
+                            .offset(y: -40)
+                             }
+                
+                Text("Welcome")
+                    .padding()
+                    .font(.title)
+                
                 CustomTextField(placeholder: "Email", text: $email, imageName: "envelope")
                 SecureTextField(placeholder: "Password", text: $password, imageName: "lock")
                 
@@ -92,6 +107,7 @@ struct AuthenticationView: View {
     }
 }
 
+
 struct SecureTextField: View {
     var placeholder: String
     @Binding var text: String
@@ -128,6 +144,7 @@ struct CustomTextField: View {
             TextField(placeholder, text: $text)
                 .font(.headline)
                 .foregroundColor(.primary)
+                .autocapitalization(.none)
         }
         .padding()
         .background(RoundedRectangle(cornerRadius: 10).stroke(Color.gray, lineWidth: 0.5))
