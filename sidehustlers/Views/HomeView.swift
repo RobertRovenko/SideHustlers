@@ -23,7 +23,7 @@ struct HomeView: View {
     var body: some View {
         NavigationView {
             VStack {
-                Image("SHIcon")
+                Image("SideHustlersIconSmall")
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 100, height: 100)

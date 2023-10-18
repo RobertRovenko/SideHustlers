@@ -69,7 +69,7 @@ struct ContentView: View {
         }
         // ContentView
         .fullScreenCover(isPresented: $isAuthViewPresented) {
-            AuthentictionView(isAuthViewPresented: $isAuthViewPresented, isUserLoggedIn: $isUserLoggedIn, userSettings: userSettings)
+            AuthenticationView(isAuthViewPresented: $isAuthViewPresented, isUserLoggedIn: $isUserLoggedIn, userSettings: userSettings)
         }
 
         .onAppear {

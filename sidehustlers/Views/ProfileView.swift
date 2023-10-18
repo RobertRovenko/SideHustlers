@@ -30,7 +30,7 @@ struct ProfileView: View {
         NavigationView {
             VStack {
                 Spacer()
-                Text(userEmail) // Display the user's email from UserSettings
+                Text(userEmail)
                     .font(.title)
                 Spacer()
                 Toggle(isOn: $isDarkThemeEnabled) {
@@ -116,7 +116,7 @@ func deleteAccount(isAuthViewPresented: Binding<Bool>) {
 func logOut(isAuthViewPresented: Binding<Bool>) {
     do {
         try Auth.auth().signOut()
-        UserDefaults.standard.removeObject(forKey: "userEmail") //Clear the stored email
+        UserDefaults.standard.removeObject(forKey: "userEmail")
         isAuthViewPresented.wrappedValue = true
     } catch {
         print("Error signing out: \(error.localizedDescription)")

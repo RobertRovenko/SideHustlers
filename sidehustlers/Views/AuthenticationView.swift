@@ -7,64 +7,39 @@
 import SwiftUI
 import Firebase
 import FirebaseAuth
-struct AuthentictionView: View {
+
+struct AuthenticationView: View {
     @State private var email = ""
     @State private var password = ""
+    @State private var errorMessage = ""
     @Binding var isAuthViewPresented: Bool
     @Binding var isUserLoggedIn: Bool
     @ObservedObject var userSettings: UserSettings
-    
+
     var body: some View {
         NavigationView {
             VStack {
-                TextField("Email", text: $email)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .autocapitalization(.none)
-                SecureField("Password", text: $password)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                Spacer()
+
+                CustomTextField(placeholder: "Email", text: $email, imageName: "envelope")
+                SecureTextField(placeholder: "Password", text: $password, imageName: "lock")
                 
-                Button("Sign Up") {
-                    Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
-                        if let error = error {
-                            print("Error signing up: \(error.localizedDescription)")
-                        } else {
-                            // User is signed up, save their profile to Firestore
-                            let user = Auth.auth().currentUser
-                            let db = Firestore.firestore()
-                            if let user = user {
-                                db.collection("users").document(user.uid).setData([
-                                    "email": user.email ?? ""
-                                ]) { error in
-                                    if let error = error {
-                                        print("Error saving user profile: \(error.localizedDescription)")
-                                    } else {
-                                        // User profile saved, update authentication state
-                                        isAuthViewPresented = false
-                                        isUserLoggedIn = true
-                                        
-                                        // Update user email in UserDefaults and userSettings
-                                        UserDefaults.standard.set(user.email, forKey: "userEmail")
-                                        userSettings.updateEmail(user.email ?? "")
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-                
+                Text(errorMessage)
+                    .foregroundColor(.red)
+                    .padding()
+
                 Button("Log In") {
                     do {
-                        try Auth.auth().signOut() // Sign out the current user
-                        UserDefaults.standard.removeObject(forKey: "userEmail") // Clear the stored email
-                        userSettings.updateEmail("Welcome") // Set email to "Welcome" as a default
-                        isUserLoggedIn = false // Update the authentication state
-                        
+                        try Auth.auth().signOut()
+                        UserDefaults.standard.removeObject(forKey: "userEmail")
+                        userSettings.updateEmail("Welcome")
+                        isUserLoggedIn = false
+
                         Auth.auth().signIn(withEmail: email, password: password) { authResult, error in
                             if let error = error {
-                                print("Error logging in: \(error.localizedDescription)")
+                                errorMessage = "\(error.localizedDescription)"
                             } else {
                                 if let user = Auth.auth().currentUser {
-                                    // Update user email in UserDefaults and userSettings
                                     UserDefaults.standard.set(user.email, forKey: "userEmail")
                                     userSettings.updateEmail(user.email ?? "")
                                 }
@@ -73,12 +48,89 @@ struct AuthentictionView: View {
                             }
                         }
                     } catch {
-                        print("Error signing out: \(error.localizedDescription)")
+                        errorMessage = "\(error.localizedDescription)"
                     }
                 }
+                .frame(maxWidth: .infinity)
+                .padding()
+                .background(Color.blue)
+                .foregroundColor(.white)
+                .cornerRadius(10)
+                .padding()
+
+                Spacer()
+
+                Button("Sign Up") {
+                    Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
+                        if let error = error {
+                            errorMessage = "\(error.localizedDescription)"
+                        } else {
+                            let user = Auth.auth().currentUser
+                            let db = Firestore.firestore()
+                            if let user = user {
+                                db.collection("users").document(user.uid).setData([
+                                    "email": user.email ?? ""
+                                ]) { error in
+                                    if let error = error {
+                                        errorMessage = "\(error.localizedDescription)"
+                                    } else {
+                                        isAuthViewPresented = false
+                                        isUserLoggedIn = true
+                                        UserDefaults.standard.set(user.email, forKey: "userEmail")
+                                        userSettings.updateEmail(user.email ?? "")
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                .padding()
             }
             .padding()
             Spacer()
         }
+    }
+}
+
+struct SecureTextField: View {
+    var placeholder: String
+    @Binding var text: String
+    var imageName: String
+
+    var body: some View {
+        HStack {
+            Image(systemName: imageName)
+                .foregroundColor(Color.secondary)
+                .frame(width: 30, height: 30)
+
+            SecureField(placeholder, text: $text)
+                .font(.headline)
+                .foregroundColor(.primary)
+        }
+        .padding()
+        .background(RoundedRectangle(cornerRadius: 10).stroke(Color.gray, lineWidth: 0.5))
+        .padding(.horizontal)
+    }
+}
+
+
+struct CustomTextField: View {
+    var placeholder: String
+    @Binding var text: String
+    var imageName: String
+
+    var body: some View {
+        HStack {
+            Image(systemName: imageName)
+                .foregroundColor(Color.secondary)
+                .frame(width: 30, height: 30)
+
+            TextField(placeholder, text: $text)
+                .font(.headline)
+                .foregroundColor(.primary)
+        }
+        .padding()
+        .background(RoundedRectangle(cornerRadius: 10).stroke(Color.gray, lineWidth: 0.5))
+        .padding(.horizontal)
     }
 }
