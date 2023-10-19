@@ -7,8 +7,6 @@
 
 import Foundation
 
-import Foundation
-
 struct Chore: Identifiable, Encodable {
     var id: String
     var title: String

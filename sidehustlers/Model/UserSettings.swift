@@ -10,8 +10,7 @@ import SwiftUI
 
 class UserSettings: ObservableObject {
     @Published var userEmail: String = "Welcome!"
-    
-    // Add a function to update the email
+
     func updateEmail(_ email: String) {
         userEmail = email
     }

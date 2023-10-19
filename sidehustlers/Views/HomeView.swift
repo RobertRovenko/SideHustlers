@@ -38,29 +38,34 @@ struct HomeView: View {
                 }
                 .padding()
 
-                List(choreViewModel.chores, id: \.id) { chore in
-                    VStack(alignment: .leading) {
-                        Text(chore.title)
-                        Text("Reward: \(chore.reward) kr")
-                    }
-                    .onTapGesture {
-                        choreDetailContact = chore.createdBy
-                        isChoreDetailPresented.toggle()
+                List {
+                    ForEach(choreViewModel.chores, id: \.id) { chore in
+                        VStack(alignment: .leading) {
+                            Text(chore.title)
+                            Text("Reward: \(chore.reward) kr")
+                        }
+                        .onTapGesture {
+                            choreDetailContact = chore.id
+                            isChoreDetailPresented.toggle()
+                        }
+                        
                     }
                 }
+               
+             
             }
             .onAppear {
                 choreViewModel.fetchChores()
             }
         }
         .sheet(isPresented: $isChoreDetailPresented) {
-            if let chore = choreViewModel.chores.first(where: { $0.createdBy == choreDetailContact }) {
+            if let chore = choreViewModel.chores.first(where: { $0.id == choreDetailContact }) {
                 ChoreDetailView(
                     chore: chore,
                     selectedTab: $selectedTab,
                     isChoreDetailPresented: $isChoreDetailPresented,
                     contacts: $contacts,
-                    onContactMakerTapped: {_ in 
+                    onContactMakerTapped: { _ in
                         contacts.append(choreDetailContact)
                         isChoreDetailPresented = false
                     }
@@ -69,6 +74,7 @@ struct HomeView: View {
                 Text("Chore not found")
             }
         }
+
     }
 }
 
@@ -103,29 +109,55 @@ struct ChoreDetailView: View {
         }
     }
     
-    func addContactToFirebase(_ contact: String) {
-        let currentUser = Auth.auth().currentUser
-        let db = Firestore.firestore()
-        
-        if let userId = currentUser?.uid {
-            //Define the data to be added to the contact document
-            let contactData: [String: Any] = [
-                "name": contact,
-                //Add other contact information here if needed
-            ]
-            
-            //Reference to the user's contacts subcollection
-            let contactsCollection = db.collection("users").document(userId).collection("contacts")
-            
-            //Add the contact document to the contacts subcollection
-            contactsCollection.addDocument(data: contactData) { error in
+    func addContactToFirebase(_ contactEmail: String) {
+            // Look up the UID of the user with the given email
+            let db = Firestore.firestore()
+
+            // Query users to find the UID for the given email
+            db.collection("users").whereField("email", isEqualTo: contactEmail).getDocuments { querySnapshot, error in
                 if let error = error {
-                    print("Error adding contact: \(error.localizedDescription)")
+                    print("Error looking up user: \(error.localizedDescription)")
+                    return
+                }
+
+                guard let document = querySnapshot?.documents.first else {
+                    print("User with email not found")
+                    return
+                }
+
+                let contactUID = document.documentID
+                
+                sendMessage(to: contactUID)
+            }
+        }
+    
+    
+    func sendMessage(to receiverUID: String) {
+            guard let currentUser = Auth.auth().currentUser else {
+                print("User not authenticated")
+                return
+            }
+
+            // Construct the message content
+            let contactEmail = currentUser.email ?? "Your email" // Replace with a default value
+            let messageContent = "Hey, I'm interested in your job offer, contact me at \(contactEmail)."
+
+            let db = Firestore.firestore()
+            let messageCollection = db.collection("messages")
+
+            let messageData = [
+                "sender": currentUser.uid,
+                "receiver": receiverUID,
+                "content": messageContent,
+                "timestamp": Timestamp(date: Date())
+            ] as [String: Any]
+
+            messageCollection.addDocument(data: messageData) { error in
+                if let error = error {
+                    print("Error sending message: \(error.localizedDescription)")
                 } else {
-                    //Successfully added the contact to Firestore
-                    contacts.append(contact)
+                    print("Message sent successfully")
                 }
             }
         }
-    }
 }

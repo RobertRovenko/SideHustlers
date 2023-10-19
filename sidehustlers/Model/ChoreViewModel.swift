@@ -45,20 +45,25 @@ class ChoreViewModel: ObservableObject {
             var fetchedChores: [Chore] = []
 
             for document in querySnapshot!.documents {
-                if let choreData = document.data() as? [String: Any],
-                   let title = choreData["title"] as? String,
-                   let description = choreData["description"] as? String,
-                   let reward = choreData["reward"] as? Int,
-                   let createdBy = choreData["createdBy"] as? String {
-                    let chore = Chore(title: title, description: description, reward: reward, createdBy: createdBy)
-                    fetchedChores.append(chore)
+                if let choreData = document.data() as? [String: Any] {
+                    if let title = choreData["title"] as? String,
+                       let description = choreData["description"] as? String,
+                       let reward = choreData["reward"] as? Int,
+                       let createdBy = choreData["createdBy"] as? String {
+                       let chore = Chore(title: title, description: description, reward: reward, createdBy: createdBy)
+                       fetchedChores.append(chore)
+                    }
                 }
+
             }
 
+
             self.chores = fetchedChores
-            print("Fetched \(fetchedChores.count) chores")
+            print("Fetched \(fetchedChores.count) chores ViewModel")
+            print("Chores: \(fetchedChores)") // Add this line
         }
     }
+
 
     
     func addContact(_ contact: String) {

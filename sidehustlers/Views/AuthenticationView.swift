@@ -76,30 +76,33 @@ struct AuthenticationView: View {
                 Spacer()
 
                 Button("Sign Up") {
-                    Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
-                        if let error = error {
-                            errorMessage = "\(error.localizedDescription)"
-                        } else {
-                            let user = Auth.auth().currentUser
-                            let db = Firestore.firestore()
-                            if let user = user {
-                                db.collection("users").document(user.uid).setData([
-                                    "email": user.email ?? ""
-                                ]) { error in
-                                    if let error = error {
-                                        errorMessage = "\(error.localizedDescription)"
-                                    } else {
-                                        isAuthViewPresented = false
-                                        isUserLoggedIn = true
-                                        UserDefaults.standard.set(user.email, forKey: "userEmail")
-                                        userSettings.updateEmail(user.email ?? "")
+                            Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
+                                if let error = error {
+                                    errorMessage = "\(error.localizedDescription)"
+                                } else {
+                                    if let user = Auth.auth().currentUser {
+                                        let db = Firestore.firestore()
+                                        
+                                        let userDocRef = db.collection("users").document(user.uid)
+                                        userDocRef.setData([
+                                            "email": user.email ?? ""
+                                           
+                                        ]) { error in
+                                            if let error = error {
+                                                errorMessage = "\(error.localizedDescription)"
+                                            } else {
+                                                isAuthViewPresented = false
+                                                isUserLoggedIn = true
+                                                UserDefaults.standard.set(user.email, forKey: "userEmail")
+                                                userSettings.updateEmail(user.email ?? "")
+                                            }
+                                        }
                                     }
                                 }
                             }
                         }
-                    }
-                }
-                .padding()
+                        .padding()
+                    
             }
             .padding()
             Spacer()
