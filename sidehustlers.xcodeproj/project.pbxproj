@@ -34,6 +34,7 @@
 		DA6338C12ADD876D00E6FDC2 /* UserSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6338C02ADD876D00E6FDC2 /* UserSettings.swift */; };
 		DAAEDA4F2ADC78CF00B0BD47 /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAAEDA4E2ADC78CF00B0BD47 /* Contact.swift */; };
 		DAAEDA512ADC791300B0BD47 /* ContactViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAAEDA502ADC791300B0BD47 /* ContactViewModel.swift */; };
+		DAEF92942AE26EB700B449D6 /* MessagesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAEF92932AE26EB700B449D6 /* MessagesManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -77,6 +78,7 @@
 		DA6338C02ADD876D00E6FDC2 /* UserSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSettings.swift; sourceTree = "<group>"; };
 		DAAEDA4E2ADC78CF00B0BD47 /* Contact.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Contact.swift; sourceTree = "<group>"; };
 		DAAEDA502ADC791300B0BD47 /* ContactViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactViewModel.swift; sourceTree = "<group>"; };
+		DAEF92932AE26EB700B449D6 /* MessagesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -192,6 +194,7 @@
 				DAAEDA4E2ADC78CF00B0BD47 /* Contact.swift */,
 				DAAEDA502ADC791300B0BD47 /* ContactViewModel.swift */,
 				DA6338C02ADD876D00E6FDC2 /* UserSettings.swift */,
+				DAEF92932AE26EB700B449D6 /* MessagesManager.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -353,6 +356,7 @@
 				DA6338C12ADD876D00E6FDC2 /* UserSettings.swift in Sources */,
 				DA62F3512ADA8E1A009189EB /* sidehustlersApp.swift in Sources */,
 				DAAEDA512ADC791300B0BD47 /* ContactViewModel.swift in Sources */,
+				DAEF92942AE26EB700B449D6 /* MessagesManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -10,86 +10,57 @@ import SwiftUI
 import Firebase
 import FirebaseAuth
 import FirebaseFirestore
-
-struct MessagesTyperView: View {
-    @Binding var selectedTab: Int
-    let contact: String
-    @State private var newMessage = ""
-    @State private var messages: [Message] = []
-    @Binding var contacts: [String]
-
-    var body: some View {
-        VStack {
-            List(messages) { message in
-                Text(message.sender)
-                Text(message.content)
-            }
-
-            HStack {
-                TextField("Type a message", text: $newMessage)
-                Button(action: sendMessage) {
-                    Text("Send")
-                }
-            }
-        }
-        .navigationBarTitle(Text(contact), displayMode: .inline)
-    }
-
-    func sendMessage() {
-      
-    }
-
-    func fetchMessages() {
-       
-    }
-}
-
-
 struct MessagesView: View {
     @Binding var selectedTab: Int
-    @Binding var contacts: [String]
-
-    init(selectedTab: Binding<Int>, contacts: Binding<[String]>) {
-        self._selectedTab = selectedTab
-        self._contacts = contacts
-
-        //Fetch the user's contacts from Firebase Firestore
-        fetchUserContacts()
-    }
+    @ObservedObject var messageManager: MessageManager
 
     var body: some View {
         NavigationView {
-            List(contacts, id: \.self) { contact in
-                NavigationLink(destination: MessagesTyperView(selectedTab: $selectedTab, contact: contact, contacts: $contacts)) {
-                    Text(contact)
+            VStack {
+                Text("Messages Screen Content")
+
+                List {
+                    ForEach(messageManager.uniqueContactedSenderUIDs, id: \.self) { senderUID in
+                        // Retrieve contact email based on the sender UID and use it as the label
+                        if let contactEmail = messageManager.contacts.first(where: { $0.value == senderUID })?.key {
+                            NavigationLink(destination: ChatView(contactEmail: contactEmail, messageManager: messageManager)) {
+                                Text(contactEmail)
+                            }
+                        }
+                    }
                 }
             }
         }
-    }
-
-    func fetchUserContacts() {
-        let currentUser = Auth.auth().currentUser
-        let db = Firestore.firestore()
-
-        if let userId = currentUser?.uid {
-            //Reference to the user's contacts subcollection
-            let contactsCollection = db.collection("users").document(userId).collection("contacts")
-
-            contactsCollection.getDocuments { snapshot, error in
-                if let error = error {
-                    print("Error fetching contacts: \(error.localizedDescription)")
-                } else {
-                    var newContacts: [String] = []
-                    for document in snapshot?.documents ?? [] {
-                        if let contactName = document.data()["name"] as? String {
-                            newContacts.append(contactName)
-                        }
-                    }
-
-                    //Update the contacts array with the fetched contacts
-                    contacts = newContacts
-                }
-            }
+        .onAppear {
+            messageManager.loadMessagesAndContacts()
+            messageManager.fetchContactedUsers()
         }
     }
 }
+
+
+
+struct ChatView: View {
+    let contactEmail: String
+    @ObservedObject var messageManager: MessageManager
+    
+    var body: some View {
+        VStack {
+            Text("Chat with \(contactEmail)")
+            
+            // Display messages for this contact
+            List {
+                ForEach(messageManager.messages.filter { message in
+                    (message.senderUID == Auth.auth().currentUser?.uid && message.receiverUID == messageManager.contacts[contactEmail]) ||
+                    (message.senderUID == messageManager.contacts[contactEmail] && message.receiverUID == Auth.auth().currentUser?.uid)
+                }) { message in
+                    Text("\(message.content)")
+                }
+            }
+            
+            // Add message input field and send button
+            // Implement the functionality to send messages to this contact
+        }
+    }
+}
+

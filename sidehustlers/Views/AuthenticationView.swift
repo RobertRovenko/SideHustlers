@@ -85,8 +85,8 @@ struct AuthenticationView: View {
                                         
                                         let userDocRef = db.collection("users").document(user.uid)
                                         userDocRef.setData([
+                                            "uid": user.uid,
                                             "email": user.email ?? ""
-                                           
                                         ]) { error in
                                             if let error = error {
                                                 errorMessage = "\(error.localizedDescription)"
@@ -98,6 +98,7 @@ struct AuthenticationView: View {
                                             }
                                         }
                                     }
+
                                 }
                             }
                         }

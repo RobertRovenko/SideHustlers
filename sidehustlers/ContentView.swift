@@ -9,15 +9,20 @@ import SwiftUI
 import Firebase
 import FirebaseAuth
 
+import SwiftUI
+import Firebase
+import FirebaseAuth
+import FirebaseFirestore
+
 struct ContentView: View {
     @State private var selectedTab = 0
     @State private var isUserLoggedIn = false
     @State private var isAuthViewPresented = false
     @StateObject private var choreViewModel = ChoreViewModel()
     @State private var contacts: [String] = []
-
-
+    
     @StateObject private var userSettings = UserSettings()
+    @StateObject var messageManager = MessageManager()
     
     var body: some View {
         NavigationView {
@@ -30,7 +35,7 @@ struct ContentView: View {
                         }
                         .tag(0)
 
-                    MessagesView(selectedTab: $selectedTab, contacts: $contacts)
+                    MessagesView(selectedTab: $selectedTab, messageManager: messageManager)
                         .tabItem {
                             Image(systemName: "message.fill")
                             Text("Messages")
@@ -77,9 +82,10 @@ struct ContentView: View {
     }
 }
 
-
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
     }
 }
+
+// Your MessagesTyperView and MessagesView structs as previously provided.
