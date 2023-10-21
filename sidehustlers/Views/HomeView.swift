@@ -40,74 +40,66 @@ struct HomeView: View {
 
                 List {
                     ForEach(choreViewModel.chores, id: \.id) { chore in
-                        VStack(alignment: .leading) {
-                            Text(chore.title)
-                            Text("Reward: \(chore.reward) kr")
-                        }
-                        .onTapGesture {
-                            choreDetailContact = chore.id
-                            isChoreDetailPresented.toggle()
-                        }
-                        
+                        NavigationLink(
+                            destination: ChoreDetailView(
+                                chore: chore,
+                                selectedTab: $selectedTab,
+                                contacts: $contacts,
+                                onContactMakerTapped: { _ in
+                                contacts.append(chore.id)
+                            }
+                        ))
+                    {
+                    VStack(alignment: .leading) {
+                        Text(chore.title)
+                        Text("Reward: \(chore.reward) kr")
                     }
                 }
-               
-             
             }
+        }
+    }
             .onAppear {
-                choreViewModel.fetchChores()
+            choreViewModel.fetchChores()
             }
         }
-        .sheet(isPresented: $isChoreDetailPresented) {
-            if let chore = choreViewModel.chores.first(where: { $0.id == choreDetailContact }) {
-                ChoreDetailView(
-                    chore: chore,
-                    selectedTab: $selectedTab,
-                    isChoreDetailPresented: $isChoreDetailPresented,
-                    contacts: $contacts,
-                    onContactMakerTapped: { _ in
-                        contacts.append(choreDetailContact)
-                        isChoreDetailPresented = false
+    }
+                
+
+    private func navigateToChoreDetail(chore: Chore) {
+        NavigationLink(
+            destination: ChoreDetailView(
+                chore: chore,
+                selectedTab: $selectedTab,
+                contacts: $contacts,
+                onContactMakerTapped: { _ in
+                contacts.append(chore.id)
+            }),
+            label: {
+                EmptyView()
+            })
+        }
+    }
+
+    struct ChoreDetailView: View {
+        let chore: Chore
+            @Binding var selectedTab: Int
+            @Binding var contacts: [String]
+            var onContactMakerTapped: (String) -> Void
+
+                var body: some View {
+                    VStack {
+                        Text(chore.title)
+                        Text(chore.description)
+                        Text("Reward: \(chore.reward) kr")
+                        Text("Created by: \(chore.createdBy)")
+        
+                        Button(action: {
+                            addContactToFirebase(chore.createdBy)
+                        }) {
+                            Text("Contact Maker")
+                        }
                     }
-                )
-            } else {
-                Text("Chore not found")
-            }
-        }
-
-    }
-}
-
-
-struct ChoreDetailView: View {
-    let chore: Chore
-    @Binding var selectedTab: Int
-    @EnvironmentObject var choreViewModel: ChoreViewModel
-    @Binding var isChoreDetailPresented: Bool
-    @Binding var contacts: [String]
-    
-    //Closure to handle Contact Maker
-    var onContactMakerTapped: (String) -> Void
-    
-    var body: some View {
-        VStack {
-            Text("\(chore.title)")
-            Text("\(chore.description)")
-            Text("Reward: \(chore.reward) kr")
-            Text("Created by: \(chore.createdBy)")
-            
-            Button(action: {
-                //Integrate Firebase code to add a contact
-                addContactToFirebase(chore.createdBy)
-            }) {
-                Text("Contact Maker")
-            }
-        }
-        .onDisappear {
-            //Close the ChoreDetailView when it disappears
-            isChoreDetailPresented = false
-        }
-    }
+                }
     
     func addContactToFirebase(_ contactEmail: String) {
             // Look up the UID of the user with the given email
@@ -133,31 +125,30 @@ struct ChoreDetailView: View {
     
     
     func sendMessage(to receiverUID: String) {
-            guard let currentUser = Auth.auth().currentUser else {
-                print("User not authenticated")
-                return
-            }
+        guard let currentUser = Auth.auth().currentUser else {
+            print("User not authenticated")
+            return
+        }
 
-            // Construct the message content
-            let contactEmail = currentUser.email ?? "Your email" // Replace with a default value
-            let messageContent = "Hey, I'm interested in your job offer, contact me at \(contactEmail)."
+        // Construct the message content
+        let contactEmail = currentUser.email ?? "Your email" // Replace with a default value
+        let messageContent = "Hey, I'm interested in \(chore.title), contact me at \(contactEmail)."
+        
+        let db = Firestore.firestore()
+        let messageCollection = db.collection("messages")
 
-            let db = Firestore.firestore()
-            let messageCollection = db.collection("messages")
+        let messageData = [
+            "sender": currentUser.uid,
+            "receiver": receiverUID,
+            "content": messageContent,
+            "timestamp": Timestamp(date: Date()) ] as [String: Any]
 
-            let messageData = [
-                "sender": currentUser.uid,
-                "receiver": receiverUID,
-                "content": messageContent,
-                "timestamp": Timestamp(date: Date())
-            ] as [String: Any]
-
-            messageCollection.addDocument(data: messageData) { error in
-                if let error = error {
-                    print("Error sending message: \(error.localizedDescription)")
-                } else {
-                    print("Message sent successfully")
-                }
+        messageCollection.addDocument(data: messageData) { error in
+            if let error = error {
+                print("Error sending message: \(error.localizedDescription)")
+            } else {
+                print("Message sent successfully")
             }
         }
+    }
 }

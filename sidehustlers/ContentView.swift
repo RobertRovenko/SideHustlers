@@ -54,7 +54,7 @@ struct ContentView: View {
                     FinderView(selectedTab: $selectedTab)
                         .tabItem {
                             Image(systemName: "map.fill")
-                            Text("Finder")
+                            Text("Explore")
                         }
                         .tag(3)
 
@@ -88,4 +88,3 @@ struct ContentView_Previews: PreviewProvider {
     }
 }
 
-// Your MessagesTyperView and MessagesView structs as previously provided.

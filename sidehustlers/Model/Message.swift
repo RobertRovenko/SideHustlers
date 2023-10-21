@@ -11,7 +11,7 @@ import Firebase
 import FirebaseFirestore
 
 struct Message: Identifiable {
-    var id: String // Add an 'id' property to conform to Identifiable
+    var id: String 
     let senderUID: String
     let receiverUID: String
     let content: String
@@ -26,7 +26,7 @@ struct Message: Identifiable {
             return nil
         }
 
-        self.id = document.documentID // Use Firestore document ID as the message's unique identifier
+        self.id = document.documentID 
         self.senderUID = senderUID
         self.receiverUID = receiverUID
         self.content = content

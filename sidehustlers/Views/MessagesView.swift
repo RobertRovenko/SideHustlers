@@ -10,6 +10,8 @@ import SwiftUI
 import Firebase
 import FirebaseAuth
 import FirebaseFirestore
+
+
 struct MessagesView: View {
     @Binding var selectedTab: Int
     @ObservedObject var messageManager: MessageManager
@@ -19,12 +21,20 @@ struct MessagesView: View {
             VStack {
                 Text("Messages Screen Content")
 
-                List {
-                    ForEach(messageManager.uniqueContactedSenderUIDs, id: \.self) { senderUID in
-                        // Retrieve contact email based on the sender UID and use it as the label
-                        if let contactEmail = messageManager.contacts.first(where: { $0.value == senderUID })?.key {
-                            NavigationLink(destination: ChatView(contactEmail: contactEmail, messageManager: messageManager)) {
-                                Text(contactEmail)
+                if messageManager.uniqueContactedSenderUIDs.isEmpty {
+                    Text("You have no messages!")
+                } else {
+                    List {
+                        ForEach(messageManager.uniqueContactedSenderUIDs, id: \.self) { senderUID in
+                            if let contactEmail = messageManager.contacts.first(where: { $0.value == senderUID })?.key {
+                                NavigationLink(destination: ChatView(contactEmail: contactEmail, messageManager: messageManager)) {
+                                    Text(contactEmail)
+                                }
+                                .swipeActions {
+                                    Button("Delete", role: .destructive) {
+                                        messageManager.deleteChat(senderUID: senderUID)
+                                    }
+                                }
                             }
                         }
                     }
@@ -37,8 +47,6 @@ struct MessagesView: View {
         }
     }
 }
-
-
 
 struct ChatView: View {
     let contactEmail: String
