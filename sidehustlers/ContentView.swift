@@ -51,10 +51,10 @@ struct ContentView: View {
                         }
                         .tag(2)
 
-                    FinderView(selectedTab: $selectedTab)
+                    TasksView(selectedTab: $selectedTab)
                         .tabItem {
-                            Image(systemName: "map.fill")
-                            Text("Explore")
+                            Image(systemName: "text.justify")
+                            Text("Tasks")
                         }
                         .tag(3)
 

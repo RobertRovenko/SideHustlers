@@ -26,7 +26,7 @@
 		DA62F38D2ADAA01C009189EB /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA62F38C2ADAA01C009189EB /* HomeView.swift */; };
 		DA62F38F2ADAA031009189EB /* MessagesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA62F38E2ADAA031009189EB /* MessagesView.swift */; };
 		DA62F3912ADAA0E0009189EB /* PostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA62F3902ADAA0E0009189EB /* PostView.swift */; };
-		DA62F3932ADAA0EF009189EB /* FinderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA62F3922ADAA0EF009189EB /* FinderView.swift */; };
+		DA62F3932ADAA0EF009189EB /* TasksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA62F3922ADAA0EF009189EB /* TasksView.swift */; };
 		DA62F3952ADAA0FB009189EB /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA62F3942ADAA0FB009189EB /* ProfileView.swift */; };
 		DA62F3972ADAAA14009189EB /* AuthenticationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA62F3962ADAAA14009189EB /* AuthenticationView.swift */; };
 		DA62F39C2ADACFFB009189EB /* Chores.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA62F39B2ADACFFB009189EB /* Chores.swift */; };
@@ -70,7 +70,7 @@
 		DA62F38C2ADAA01C009189EB /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		DA62F38E2ADAA031009189EB /* MessagesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesView.swift; sourceTree = "<group>"; };
 		DA62F3902ADAA0E0009189EB /* PostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostView.swift; sourceTree = "<group>"; };
-		DA62F3922ADAA0EF009189EB /* FinderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinderView.swift; sourceTree = "<group>"; };
+		DA62F3922ADAA0EF009189EB /* TasksView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TasksView.swift; sourceTree = "<group>"; };
 		DA62F3942ADAA0FB009189EB /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		DA62F3962ADAAA14009189EB /* AuthenticationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationView.swift; sourceTree = "<group>"; };
 		DA62F39B2ADACFFB009189EB /* Chores.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chores.swift; sourceTree = "<group>"; };
@@ -178,7 +178,7 @@
 				DA62F38C2ADAA01C009189EB /* HomeView.swift */,
 				DA62F38E2ADAA031009189EB /* MessagesView.swift */,
 				DA62F3902ADAA0E0009189EB /* PostView.swift */,
-				DA62F3922ADAA0EF009189EB /* FinderView.swift */,
+				DA62F3922ADAA0EF009189EB /* TasksView.swift */,
 				DA62F3942ADAA0FB009189EB /* ProfileView.swift */,
 				DA62F3962ADAAA14009189EB /* AuthenticationView.swift */,
 			);
@@ -347,7 +347,7 @@
 				DA62F38D2ADAA01C009189EB /* HomeView.swift in Sources */,
 				DA62F3532ADA8E1A009189EB /* ContentView.swift in Sources */,
 				DA62F3912ADAA0E0009189EB /* PostView.swift in Sources */,
-				DA62F3932ADAA0EF009189EB /* FinderView.swift in Sources */,
+				DA62F3932ADAA0EF009189EB /* TasksView.swift in Sources */,
 				DA62F39C2ADACFFB009189EB /* Chores.swift in Sources */,
 				DA0516D02ADB478700A31629 /* Message.swift in Sources */,
 				DA62F3952ADAA0FB009189EB /* ProfileView.swift in Sources */,
