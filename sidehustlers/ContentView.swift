@@ -8,10 +8,6 @@
 import SwiftUI
 import Firebase
 import FirebaseAuth
-
-import SwiftUI
-import Firebase
-import FirebaseAuth
 import FirebaseFirestore
 
 struct ContentView: View {
@@ -20,9 +16,9 @@ struct ContentView: View {
     @State private var isAuthViewPresented = false
     @StateObject private var choreViewModel = ChoreViewModel()
     @State private var contacts: [String] = []
-    
     @StateObject private var userSettings = UserSettings()
     @StateObject var messageManager = MessageManager()
+    @State private var userUID: String = ""
     
     var body: some View {
         NavigationView {
@@ -52,6 +48,7 @@ struct ContentView: View {
                         .tag(2)
 
                     TasksView(selectedTab: $selectedTab)
+                        .environmentObject(choreViewModel)
                         .tabItem {
                             Image(systemName: "text.justify")
                             Text("Tasks")
@@ -78,6 +75,11 @@ struct ContentView: View {
 
         .onAppear {
             isUserLoggedIn = Auth.auth().currentUser != nil
+            if let user = Auth.auth().currentUser {
+                let userUID = user.uid
+                choreViewModel.fetchChoresForUser(userUID: userUID)
+                isUserLoggedIn = true
+            }
         }
     }
 }

@@ -19,8 +19,6 @@ struct MessagesView: View {
     var body: some View {
         NavigationView {
             VStack {
-                Text("Messages Screen Content")
-
                 if messageManager.uniqueContactedSenderUIDs.isEmpty {
                     Text("You have no messages!")
                 } else {
@@ -56,7 +54,7 @@ struct ChatView: View {
         VStack {
             Text("Chat with \(contactEmail)")
             
-            // Display messages for this contact
+           
             List {
                 ForEach(messageManager.messages.filter { message in
                     (message.senderUID == Auth.auth().currentUser?.uid && message.receiverUID == messageManager.contacts[contactEmail]) ||
@@ -66,8 +64,7 @@ struct ChatView: View {
                 }
             }
             
-            // Add message input field and send button
-            // Implement the functionality to send messages to this contact
+          
         }
     }
 }
