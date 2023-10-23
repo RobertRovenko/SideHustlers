@@ -11,7 +11,7 @@ import FirebaseAuth
 
 struct PostView: View {
     @Binding var selectedTab: Int
-    @State private var chore = Chore(title: "", description: "", reward: 0, createdBy: "")
+    @State private var chore = Chore(title: "", description: "", reward: 0, createdBy: "", author: "")
     @EnvironmentObject var choreViewModel: ChoreViewModel
     @State private var showAlert = false
     
@@ -55,17 +55,17 @@ struct PostView: View {
                     Section {
                         Button(action: {
                             if !fieldsAreEmpty {
-                                if let userEmail = currentUserEmail {
-                                    
+                                if let userEmail = currentUserEmail, let userUID = Auth.auth().currentUser?.uid { // Fetch the UID
                                     chore.createdBy = userEmail
+                                    chore.author = userUID // Set the author field
                                     choreViewModel.addChore(chore: chore, createdBy: userEmail)
                                     showAlert = true
                                     clearFields()
                                 } else {
-                                    
+                                    // Handle the case where the user or UID is not available
                                 }
                             } else {
-                                
+                                // Handle the case where the fields are empty
                             }
                         }) {
                             Text("Post Task")

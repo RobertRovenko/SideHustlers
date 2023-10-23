@@ -24,8 +24,8 @@ class ChoreViewModel: ObservableObject {
             let choreData = try encoder.encode(chore)
             var choreDictionary = try JSONSerialization.jsonObject(with: choreData, options: []) as! [String: Any]
             
-           
             choreDictionary["createdBy"] = createdBy
+            choreDictionary["author"] = chore.author // Set the "author" field
             
             _ = try db.collection("chores").addDocument(data: choreDictionary)
             
@@ -49,14 +49,13 @@ class ChoreViewModel: ObservableObject {
                     if let title = choreData["title"] as? String,
                        let description = choreData["description"] as? String,
                        let reward = choreData["reward"] as? Int,
-                       let createdBy = choreData["createdBy"] as? String {
-                       let chore = Chore(title: title, description: description, reward: reward, createdBy: createdBy)
+                       let createdBy = choreData["createdBy"] as? String,
+                       let author = choreData["author"] as? String { // Fetch the "author" field
+                       let chore = Chore(title: title, description: description, reward: reward, createdBy: createdBy, author: author) // Pass the author to the Chore constructor
                        fetchedChores.append(chore)
                     }
                 }
-
             }
-
 
             self.chores = fetchedChores
             print("Fetched \(fetchedChores.count) chores ViewModel")
