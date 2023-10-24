@@ -9,6 +9,7 @@ import Foundation
 import SwiftUI
 import Firebase
 import FirebaseAuth
+import MapKit
 
 struct HomeView: View {
     @Binding var selectedTab: Int
@@ -80,32 +81,75 @@ struct HomeView: View {
         }
     }
 
-    struct ChoreDetailView: View {
-        let chore: Chore
-            @Binding var selectedTab: Int
-            @Binding var contacts: [String]
-            var onContactMakerTapped: (String) -> Void
+struct ChoreDetailView: View {
+    let chore: Chore
+    @Binding var selectedTab: Int
+    @Binding var contacts: [String]
+    var onContactMakerTapped: (String) -> Void
+    
+    var body: some View {
+        ZStack {
+            Color.white // Background color for the card
+                .cornerRadius(10)
+                .shadow(radius: 5) // Apply a shadow to create the card-like appearance
+            
+            VStack {
+                MapView()
+                    .frame(height: 200)
+                    .padding()
+                
+                VStack {
+                    Text(chore.title)
+                        .font(.title)
+                        .padding()
+                        .frame(maxWidth: .infinity, alignment: .center)
 
-                var body: some View {
-                    VStack {
-                        Text(chore.title)
-                        Text(chore.description)
-                        Text("Reward: \(chore.reward) kr")
-                        Text("Created by: \(chore.createdBy)")
-        
-                        Button(action: {
-                            addContactToFirebase(chore.createdBy)
-                        }) {
-                            Text("Contact Maker")
-                        }
+                    Text(chore.description)
+                        .padding()
+                        .frame(maxWidth: .infinity, alignment: .center)
+
+                    
+                    Spacer()
+                    
+                    Text("\(chore.reward) kr")
+                        .padding()
+                    
+                    Button(action: {
+                        addContactToFirebase(chore.createdBy)
+                    }) {
+                        Text("Contact Maker")
+                            .foregroundColor(.white)
+                            .padding()
+                            .background(Color.blue)
+                            .cornerRadius(10)
                     }
                 }
+                .padding()
+                
+                Spacer()
+            }
+            .padding()
+        }
+        .padding()
+    
+        .navigationBarTitle(chore.title, displayMode: .inline)
+     
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+               
+            }
+        }
+    }
+
+  
+
+
+    
     
     func addContactToFirebase(_ contactEmail: String) {
-            // Look up the UID of the user with the given email
+           
             let db = Firestore.firestore()
 
-            // Query users to find the UID for the given email
             db.collection("users").whereField("email", isEqualTo: contactEmail).getDocuments { querySnapshot, error in
                 if let error = error {
                     print("Error looking up user: \(error.localizedDescription)")
@@ -130,8 +174,7 @@ struct HomeView: View {
             return
         }
 
-        // Construct the message content
-        let contactEmail = currentUser.email ?? "Your email" // Replace with a default value
+        let contactEmail = currentUser.email ?? "Your email"
         let messageContent = "Hey, I'm interested in \(chore.title), contact me at \(contactEmail)."
         
         let db = Firestore.firestore()
@@ -150,5 +193,20 @@ struct HomeView: View {
                 print("Message sent successfully")
             }
         }
+    }
+}
+
+struct MapView: UIViewRepresentable {
+   
+    func makeUIView(context: Context) -> MKMapView {
+        MKMapView()
+    }
+
+    func updateUIView(_ uiView: MKMapView, context: Context) {
+        // Update the MapView here
+        let coordinate = CLLocationCoordinate2D(latitude: 59.3293, longitude: 18.0686)
+        
+        let region = MKCoordinateRegion(center: coordinate, span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05))
+        uiView.setRegion(region, animated: true)
     }
 }
