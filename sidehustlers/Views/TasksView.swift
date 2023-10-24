@@ -17,7 +17,12 @@ struct TasksView: View {
     var body: some View {
         NavigationView {
             VStack {
-                Text("Your Tasks")
+                Text("Your Listings")
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .font(.headline)
+                    .fontWeight(.bold)
+                    .foregroundColor(.primary)
+                    .padding()
 
                 List {
                     ForEach(choreViewModel.chores.filter { $0.author == userUID }) { chore in

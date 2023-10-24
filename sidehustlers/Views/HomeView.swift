@@ -175,7 +175,7 @@ struct ChoreDetailView: View {
         }
 
         let contactEmail = currentUser.email ?? "Your email"
-        let messageContent = "Hey, I'm interested in \(chore.title), contact me at \(contactEmail)."
+        let messageContent = "Hej, jag är intreserad av din annons - \(chore.title), om du vill kan du kontakta mig via \(contactEmail)."
         
         let db = Firestore.firestore()
         let messageCollection = db.collection("messages")
