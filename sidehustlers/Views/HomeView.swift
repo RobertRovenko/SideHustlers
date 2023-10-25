@@ -16,8 +16,6 @@ struct HomeView: View {
     @ObservedObject var choreViewModel: ChoreViewModel
     @State private var selectedChore: Chore?
     @Binding var contacts: [String]
-    @StateObject var contactViewModel = ContactViewModel()
-    
     @State private var isChoreDetailPresented = false
     @State private var choreDetailContact: String = ""
 

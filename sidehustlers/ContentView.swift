@@ -79,6 +79,8 @@ struct ContentView: View {
                 let userUID = user.uid
                 choreViewModel.fetchChoresForUser(userUID: userUID)
                 isUserLoggedIn = true
+                messageManager.loadMessagesAndContacts()
+                messageManager.fetchContactedUsers()
             }
         }
     }

@@ -15,48 +15,51 @@ class MessageManager: ObservableObject {
     @Published var contacts: [String: String] = [:] // Maps email to UID
     @Published var uniqueSenderUIDs: [String] = [] // Store unique sender UIDs
     @Published var uniqueContactedSenderUIDs: [String] = [] // Store unique sender UIDs
-
+    static let shared = MessageManager()
+    
     // Load messages and contacts from Firebase
     func loadMessagesAndContacts() {
-        // Fetch messages
-        let messagesCollection = Firestore.firestore().collection("messages")
-        messagesCollection.getDocuments { [self] (snapshot, error) in
-            if let error = error {
-                print("Error fetching messages: \(error.localizedDescription)")
-                return
-            }
-            guard let documents = snapshot?.documents else { return }
-
-            self.messages = documents.compactMap { document in
-                if let message = Message(document: document) {
-                    return message
-                } else {
-                    return nil
+            // Fetch messages
+            let messagesCollection = Firestore.firestore().collection("messages")
+            messagesCollection.getDocuments { [self] (snapshot, error) in
+                if let error = error {
+                    print("Error fetching messages: \(error.localizedDescription)")
+                    return
                 }
-            }
+                guard let documents = snapshot?.documents else { return }
 
-            // Update uniqueSenderUIDs
-            self.updateUniqueSenderUIDs()
-        }
-
-        // Fetch user data to create contacts
-        let usersCollection = Firestore.firestore().collection("users")
-        usersCollection.getDocuments { [self] (snapshot, error) in
-            if let error = error {
-                print("Error fetching users: \(error.localizedDescription)")
-                return
-            }
-            guard let documents = snapshot?.documents else { return }
-
-            self.contacts = Dictionary(uniqueKeysWithValues: documents.compactMap { document in
-                if let userData = UserData(document: document) {
-                    return (userData.email, userData.uid) // Store email-to-UID mapping
-                } else {
-                    return nil
+                self.messages = documents.compactMap { document in
+                    if let message = Message(document: document) {
+                        return message
+                    } else {
+                        return nil
+                    }
                 }
-            })
+
+                self.updateUniqueSenderUIDs()
+                self.objectWillChange.send() // Notify the view to update
+            }
+
+            // Fetch user data to create contacts
+            let usersCollection = Firestore.firestore().collection("users")
+            usersCollection.getDocuments { [self] (snapshot, error) in
+                if let error = error {
+                    print("Error fetching users: \(error.localizedDescription)")
+                    return
+                }
+                guard let documents = snapshot?.documents else { return }
+
+                self.contacts = Dictionary(uniqueKeysWithValues: documents.compactMap { document in
+                    if let userData = UserData(document: document) {
+                        return (userData.email, userData.uid)
+                    } else {
+                        return nil
+                    }
+                })
+
+                self.objectWillChange.send() // Notify the view to update
+            }
         }
-    }
 
     // Delete a contact based on the senderUID
     func deleteChat(senderUID: String) {

@@ -11,10 +11,11 @@ import FirebaseAuth
 import Combine
 
 class AppDelegate: NSObject, UIApplicationDelegate {
+    let messageManager = MessageManager.shared
   func application(_ application: UIApplication,
                    didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
     FirebaseApp.configure()
-
+    messageManager.loadMessagesAndContacts()
     return true
   }
 }
@@ -22,14 +23,18 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 
 @main
 struct sidehustlersApp: App {
-    
+    @StateObject private var messageManager = MessageManager.shared
     @StateObject private var choreViewModel = ChoreViewModel()
+   
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     
     var body: some Scene {
         WindowGroup {
             ContentView()
                 .environmentObject(choreViewModel)
+             
+                .environmentObject(messageManager)
         }
     }
 }
+
