@@ -87,9 +87,9 @@ struct ChoreDetailView: View {
     
     var body: some View {
         ZStack {
-            Color.white // Background color for the card
+            Color.white
                 .cornerRadius(10)
-                .shadow(radius: 5) // Apply a shadow to create the card-like appearance
+                .shadow(radius: 5)
             
             VStack {
                 MapView()
@@ -201,7 +201,7 @@ struct MapView: UIViewRepresentable {
     }
 
     func updateUIView(_ uiView: MKMapView, context: Context) {
-        // Update the MapView here
+       
         let coordinate = CLLocationCoordinate2D(latitude: 59.3293, longitude: 18.0686)
         
         let region = MKCoordinateRegion(center: coordinate, span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05))

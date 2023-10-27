@@ -12,11 +12,13 @@ import Combine
 
 class AppDelegate: NSObject, UIApplicationDelegate {
     let messageManager = MessageManager.shared
-  func application(_ application: UIApplication,
-                   didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
+  
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
+        
     FirebaseApp.configure()
     messageManager.loadMessagesAndContacts()
     return true
+        
   }
 }
 
@@ -32,7 +34,6 @@ struct sidehustlersApp: App {
         WindowGroup {
             ContentView()
                 .environmentObject(choreViewModel)
-             
                 .environmentObject(messageManager)
         }
     }

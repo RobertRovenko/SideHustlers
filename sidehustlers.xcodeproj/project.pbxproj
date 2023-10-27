@@ -188,9 +188,9 @@
 			children = (
 				DA62F39B2ADACFFB009189EB /* Chores.swift */,
 				DA62F39F2ADAD2B7009189EB /* ChoreViewModel.swift */,
-				DA0516CF2ADB478700A31629 /* Message.swift */,
 				DAAEDA4E2ADC78CF00B0BD47 /* Contact.swift */,
 				DA6338C02ADD876D00E6FDC2 /* UserSettings.swift */,
+				DA0516CF2ADB478700A31629 /* Message.swift */,
 				DAEF92932AE26EB700B449D6 /* MessagesManager.swift */,
 			);
 			path = Model;

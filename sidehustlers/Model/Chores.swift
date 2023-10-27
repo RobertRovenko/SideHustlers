@@ -13,7 +13,7 @@ struct Chore: Identifiable, Encodable {
     var description: String
     var reward: Int
     var createdBy: String
-    var author: String // Add this field for the UID of the user
+    var author: String
 
     init(title: String, description: String, reward: Int, createdBy: String, author: String) {
         self.id = UUID().uuidString
@@ -21,6 +21,6 @@ struct Chore: Identifiable, Encodable {
         self.description = description
         self.reward = reward
         self.createdBy = createdBy
-        self.author = author // Initialize the author field
+        self.author = author 
     }
 }

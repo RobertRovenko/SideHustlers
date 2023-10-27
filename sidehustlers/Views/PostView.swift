@@ -16,7 +16,6 @@ struct PostView: View {
     @State private var showAlert = false
     @State private var selectedCity = "Stockholm"
     
-    // Add custom text field style
     let textFieldStyle: some TextFieldStyle = RoundedTextFieldStyle()
     
     var fieldsAreEmpty: Bool {
@@ -34,14 +33,7 @@ struct PostView: View {
         NavigationView {
             ZStack {
                
-                VStack {
-                    Text("Task Details")
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .font(.headline)
-                        .fontWeight(.bold)
-                        .foregroundColor(.primary)
-                        .padding()
-                    
+                VStack {                    
                     VStack {
                         Section(header:
                             Text("Task Details")
@@ -142,7 +134,6 @@ struct PostView: View {
     }
 }
 
-// Custom TextFieldStyle for text field appearance
 struct RoundedTextFieldStyle: TextFieldStyle {
     func _body(configuration: TextField<Self._Label>) -> some View {
         configuration

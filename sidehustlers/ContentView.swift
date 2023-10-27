@@ -14,8 +14,8 @@ struct ContentView: View {
     @State private var selectedTab = 0
     @State private var isUserLoggedIn = false
     @State private var isAuthViewPresented = false
-    @StateObject private var choreViewModel = ChoreViewModel()
     @State private var contacts: [String] = []
+    @StateObject private var choreViewModel = ChoreViewModel()
     @StateObject private var userSettings = UserSettings()
     @StateObject var messageManager = MessageManager()
     @State private var userUID: String = ""
@@ -81,6 +81,8 @@ struct ContentView: View {
                 isUserLoggedIn = true
                 messageManager.loadMessagesAndContacts()
                 messageManager.fetchContactedUsers()
+               
+                
             }
         }
     }

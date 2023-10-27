@@ -50,8 +50,8 @@ class ChoreViewModel: ObservableObject {
                        let description = choreData["description"] as? String,
                        let reward = choreData["reward"] as? Int,
                        let createdBy = choreData["createdBy"] as? String,
-                       let author = choreData["author"] as? String { // Fetch the "author" field
-                       let chore = Chore(title: title, description: description, reward: reward, createdBy: createdBy, author: author) // Pass the author to the Chore constructor
+                       let author = choreData["author"] as? String {
+                       let chore = Chore(title: title, description: description, reward: reward, createdBy: createdBy, author: author)
                        fetchedChores.append(chore)
                     }
                 }
@@ -59,12 +59,12 @@ class ChoreViewModel: ObservableObject {
 
             self.chores = fetchedChores
             print("Fetched \(fetchedChores.count) chores ViewModel")
-            print("Chores: \(fetchedChores)") // Add this line
+            print("Chores: \(fetchedChores)")
         }
     }
 
     func fetchChoresForUser(userUID: String) {
-           // Fetch chores for the specific user based on their UID
+         
            self.db.collection("chores")
                .whereField("author", isEqualTo: userUID)
                .addSnapshotListener { querySnapshot, error in
@@ -89,15 +89,8 @@ class ChoreViewModel: ObservableObject {
                    }
 
                    self.chores = fetchedChores
-
-                   // Print the fetched chores
+                   
                    print("Fetched Chores for user \(userUID): \(fetchedChores)")
                }
        }
-
-    
-    func addContact(_ contact: String) {
-      
-    }
-
 }
