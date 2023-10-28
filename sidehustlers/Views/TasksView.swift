@@ -34,7 +34,7 @@ struct TasksView: View {
         .onAppear {
             if let user = Auth.auth().currentUser {
                 userUID = user.uid
-                print("User UID: \(userUID)") 
+                print("User UID: \(userUID)")
             }
         }
     }

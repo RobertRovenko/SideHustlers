@@ -139,10 +139,6 @@ struct ChoreDetailView: View {
         }
     }
 
-  
-
-
-    
     
     func addContactToFirebase(_ contactEmail: String) {
            
@@ -173,7 +169,7 @@ struct ChoreDetailView: View {
         }
 
         let contactEmail = currentUser.email ?? "Your email"
-        let messageContent = "Hej, jag är intreserad av din annons - \(chore.title), om du vill kan du kontakta mig via \(contactEmail)."
+        let messageContent = "Hej, jag är intreserad av din annons - \(chore.title)"
         
         let db = Firestore.firestore()
         let messageCollection = db.collection("messages")

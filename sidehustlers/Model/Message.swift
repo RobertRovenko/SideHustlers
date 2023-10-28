@@ -10,7 +10,7 @@ import SwiftUI
 import Firebase
 import FirebaseFirestore
 
-struct Message: Identifiable {
+struct Message: Identifiable, Equatable {
     var id = UUID() // Use a UUID as a default identifier
     let senderUID: String
     let receiverUID: String
@@ -25,10 +25,14 @@ struct Message: Identifiable {
               let timestamp = data["timestamp"] as? Timestamp else {
             return nil
         }
-
+        
         self.senderUID = senderUID
         self.receiverUID = receiverUID
         self.content = content
         self.timestamp = timestamp.dateValue()
+        
     }
+    
+    
+    
 }
