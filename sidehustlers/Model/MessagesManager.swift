@@ -68,9 +68,17 @@ class MessageManager: ObservableObject {
     
     func fetchContactedUsers() {
         let currentUserUID = Auth.auth().currentUser?.uid ?? ""
-        let contactedSenderUIDs = Set(messages.filter { $0.receiverUID == currentUserUID }.map { $0.senderUID })
+
+        // Fetch all unique UIDs from messages where the current user is either the sender or receiver
+        let contactedSenderUIDs = Set(messages
+            .filter { $0.senderUID == currentUserUID || $0.receiverUID == currentUserUID }
+            .map { $0.senderUID != currentUserUID ? $0.senderUID : $0.receiverUID }
+        )
+
         uniqueContactedSenderUIDs = Array(contactedSenderUIDs)
     }
+
+
 }
 
 struct UserData {

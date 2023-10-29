@@ -32,6 +32,7 @@
 		DA62F39C2ADACFFB009189EB /* Chores.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA62F39B2ADACFFB009189EB /* Chores.swift */; };
 		DA62F3A02ADAD2B7009189EB /* ChoreViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA62F39F2ADAD2B7009189EB /* ChoreViewModel.swift */; };
 		DA6338C12ADD876D00E6FDC2 /* UserSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6338C02ADD876D00E6FDC2 /* UserSettings.swift */; };
+		DA6DB1CF2AEE8EB9008522BB /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6DB1CE2AEE8EB9008522BB /* Contact.swift */; };
 		DAEF92942AE26EB700B449D6 /* MessagesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAEF92932AE26EB700B449D6 /* MessagesManager.swift */; };
 /* End PBXBuildFile section */
 
@@ -74,6 +75,7 @@
 		DA62F39B2ADACFFB009189EB /* Chores.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chores.swift; sourceTree = "<group>"; };
 		DA62F39F2ADAD2B7009189EB /* ChoreViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChoreViewModel.swift; sourceTree = "<group>"; };
 		DA6338C02ADD876D00E6FDC2 /* UserSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSettings.swift; sourceTree = "<group>"; };
+		DA6DB1CE2AEE8EB9008522BB /* Contact.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Contact.swift; sourceTree = "<group>"; };
 		DAEF92932AE26EB700B449D6 /* MessagesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -189,6 +191,7 @@
 				DA6338C02ADD876D00E6FDC2 /* UserSettings.swift */,
 				DA0516CF2ADB478700A31629 /* Message.swift */,
 				DAEF92932AE26EB700B449D6 /* MessagesManager.swift */,
+				DA6DB1CE2AEE8EB9008522BB /* Contact.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -342,6 +345,7 @@
 				DA62F3912ADAA0E0009189EB /* PostView.swift in Sources */,
 				DA62F3932ADAA0EF009189EB /* TasksView.swift in Sources */,
 				DA62F39C2ADACFFB009189EB /* Chores.swift in Sources */,
+				DA6DB1CF2AEE8EB9008522BB /* Contact.swift in Sources */,
 				DA0516D02ADB478700A31629 /* Message.swift in Sources */,
 				DA62F3952ADAA0FB009189EB /* ProfileView.swift in Sources */,
 				DA62F3972ADAAA14009189EB /* AuthenticationView.swift in Sources */,

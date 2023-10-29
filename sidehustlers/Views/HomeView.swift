@@ -14,6 +14,7 @@ import MapKit
 struct HomeView: View {
     @Binding var selectedTab: Int
     @ObservedObject var choreViewModel: ChoreViewModel
+    @ObservedObject var messageManager: MessageManager
     @State private var selectedChore: Chore?
     @Binding var contacts: [String]
     @State private var isChoreDetailPresented = false
@@ -44,9 +45,10 @@ struct HomeView: View {
                                 chore: chore,
                                 selectedTab: $selectedTab,
                                 contacts: $contacts,
-                                onContactMakerTapped: { _ in
-                                contacts.append(chore.id)
-                            }
+                                onContactMakerTapped: { contactEmail in
+                                    contacts.append(chore.id)
+                                    sendMessageAndRefreshList(choreId: chore.id, contactEmail: contactEmail)
+                                }, messageManager: messageManager
                         ))
                     {
                     VStack(alignment: .leading) {
@@ -59,10 +61,18 @@ struct HomeView: View {
     }
             .onAppear {
             choreViewModel.fetchChores()
+            messageManager.loadMessagesAndContacts()
             }
         }
     }
                 
+    private func sendMessageAndRefreshList(choreId: String, contactEmail: String) {
+            // Send the message to the contact
+            // ...
+
+            // After sending the message, refresh the list of conversations
+            messageManager.fetchContactedUsers()
+        }
 
     private func navigateToChoreDetail(chore: Chore) {
         NavigationLink(
@@ -71,8 +81,8 @@ struct HomeView: View {
                 selectedTab: $selectedTab,
                 contacts: $contacts,
                 onContactMakerTapped: { _ in
-                contacts.append(chore.id)
-            }),
+                    contacts.append(chore.id)
+                }, messageManager: messageManager),
             label: {
                 EmptyView()
             })
@@ -84,6 +94,7 @@ struct ChoreDetailView: View {
     @Binding var selectedTab: Int
     @Binding var contacts: [String]
     var onContactMakerTapped: (String) -> Void
+    @ObservedObject var messageManager: MessageManager
     
     var body: some View {
         ZStack {
@@ -114,6 +125,7 @@ struct ChoreDetailView: View {
                     
                     Button(action: {
                         addContactToFirebase(chore.createdBy)
+                        messageManager.loadMessagesAndContacts()
                     }) {
                         Text("Contact Maker")
                             .foregroundColor(.white)
@@ -158,6 +170,8 @@ struct ChoreDetailView: View {
                 let contactUID = document.documentID
                 
                 sendMessage(to: contactUID)
+                messageManager.loadMessagesAndContacts()
+                messageManager.fetchContactedUsers()
             }
         }
     
@@ -167,8 +181,7 @@ struct ChoreDetailView: View {
             print("User not authenticated")
             return
         }
-
-        let contactEmail = currentUser.email ?? "Your email"
+        
         let messageContent = "Hej, jag är intreserad av din annons - \(chore.title)"
         
         let db = Firestore.firestore()
@@ -185,6 +198,10 @@ struct ChoreDetailView: View {
                 print("Error sending message: \(error.localizedDescription)")
             } else {
                 print("Message sent successfully")
+               
+                messageManager.fetchContactedUsers()
+                messageManager.loadMessagesAndContacts()
+                
             }
         }
     }

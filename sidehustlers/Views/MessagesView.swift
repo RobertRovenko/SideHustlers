@@ -15,11 +15,12 @@ import FirebaseFirestore
 struct MessagesView: View {
     @Binding var selectedTab: Int
     @ObservedObject var messageManager: MessageManager
-   
+    @State private var chatViews: [String: [Message]] = [:]
+
     var body: some View {
         NavigationView {
             VStack {
-                if messageManager.uniqueContactedSenderUIDs.isEmpty {
+                if chatViews.isEmpty {
                     Text("You have no messages!")
                 } else {
                     Text("Messages")
@@ -29,15 +30,15 @@ struct MessagesView: View {
                         .foregroundColor(.primary)
                         .padding()
                     List {
-                        ForEach(messageManager.uniqueContactedSenderUIDs, id: \.self) { senderUID in
-                            if let contactEmail = messageManager.contacts.first(where: { $0.value == senderUID })?.key {
-                                NavigationLink(destination: ChatView(contactEmail: contactEmail, receiverUID: senderUID, messageManager: messageManager)) {
+                        ForEach(chatViews.sorted(by: { $0.value.last?.timestamp ?? .distantPast > $1.value.last?.timestamp ?? .distantPast }), id: \.key) { (uid, messages) in
+                            if let contactEmail = messageManager.contacts.first(where: { $0.value == uid })?.key {
+                                NavigationLink(destination: ChatView(contactEmail: contactEmail, receiverUID: uid, messageManager: messageManager)) {
                                     HStack {
                                         Text(contactEmail)
                                             .font(.headline)
                                             .foregroundColor(.primary)
                                         Spacer()
-                                        Text("Today") 
+                                        Text("Today")
                                             .font(.subheadline)
                                             .foregroundColor(.secondary)
                                     }
@@ -48,9 +49,8 @@ struct MessagesView: View {
                                 }
                                 .swipeActions {
                                     Button("Delete", role: .destructive) {
-                                       
+                                        // Delete the chat or perform your desired action
                                     }
-                                    
                                 }
                             }
                         }
@@ -60,13 +60,28 @@ struct MessagesView: View {
             .navigationBarTitleDisplayMode(.inline)
         }
         .onAppear {
-            if Auth.auth().currentUser != nil {
-                    messageManager.fetchContactedUsers()
-                } else {
+            messageManager.fetchContactedUsers()
+        }
+        .onReceive(messageManager.$messages) { newMessages in
+            updateChatViews(messages: newMessages)
+        }
+    }
+
+    private func updateChatViews(messages: [Message]) {
+        chatViews.removeAll()
+
+        for message in messages {
+            let uid = message.senderUID == Auth.auth().currentUser?.uid ? message.receiverUID : message.senderUID
+
+            if chatViews[uid] == nil {
+                chatViews[uid] = [message]
+            } else {
+                chatViews[uid]?.append(message)
             }
         }
     }
 }
+
 
 struct ChatView: View {
     @State private var newMessage = ""
@@ -79,11 +94,10 @@ struct ChatView: View {
         VStack {
             List {
                 ForEach(messageManager.messages.filter { message in
-        
-                    return (message.senderUID == Auth.auth().currentUser?.uid && message.receiverUID == receiverUID) || (message.senderUID == receiverUID && message.receiverUID == Auth.auth().currentUser?.uid)
-                    }.sorted(by: { $0.timestamp < $1.timestamp })
-                ) { message in
-            if message.senderUID == Auth.auth().currentUser?.uid {
+                                  return (message.senderUID == Auth.auth().currentUser?.uid && message.receiverUID == receiverUID) ||
+                                         (message.senderUID == receiverUID && message.receiverUID == Auth.auth().currentUser?.uid)
+                              }.sorted(by: { $0.timestamp < $1.timestamp })) { message in
+                                  if message.senderUID == Auth.auth().currentUser?.uid {
         
                         HStack {
                             Spacer()

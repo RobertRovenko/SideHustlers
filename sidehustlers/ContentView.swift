@@ -24,7 +24,7 @@ struct ContentView: View {
         NavigationView {
             if isUserLoggedIn {
                 TabView(selection: $selectedTab) {
-                    HomeView(selectedTab: $selectedTab, choreViewModel: choreViewModel, contacts: $contacts)
+                    HomeView(selectedTab: $selectedTab, choreViewModel: choreViewModel, messageManager: messageManager, contacts: $contacts)
                         .tabItem {
                             Image(systemName: "house.fill")
                             Text("Home")
