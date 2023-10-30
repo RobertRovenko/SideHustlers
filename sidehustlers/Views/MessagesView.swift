@@ -60,7 +60,10 @@ struct MessagesView: View {
             .navigationBarTitleDisplayMode(.inline)
         }
         .onAppear {
+            
+            messageManager.loadMessagesAndContacts()
             messageManager.fetchContactedUsers()
+            
         }
         .onReceive(messageManager.$messages) { newMessages in
             updateChatViews(messages: newMessages)
@@ -70,16 +73,19 @@ struct MessagesView: View {
     private func updateChatViews(messages: [Message]) {
         chatViews.removeAll()
 
-        for message in messages {
-            let uid = message.senderUID == Auth.auth().currentUser?.uid ? message.receiverUID : message.senderUID
+        let currentUserUID = Auth.auth().currentUser?.uid
 
-            if chatViews[uid] == nil {
-                chatViews[uid] = [message]
+        for message in messages {
+            let otherUID = (message.senderUID == currentUserUID) ? message.receiverUID : message.senderUID
+
+            if chatViews[otherUID] == nil {
+                chatViews[otherUID] = [message]
             } else {
-                chatViews[uid]?.append(message)
+                chatViews[otherUID]?.append(message)
             }
         }
     }
+
 }
 
 

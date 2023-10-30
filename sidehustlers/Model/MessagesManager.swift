@@ -62,14 +62,13 @@ class MessageManager: ObservableObject {
 
     
     private func updateUniqueSenderUIDs() {
-        let senderUIDs = messages.map { $0.senderUID }
-        uniqueSenderUIDs = Array(Set(senderUIDs))
-    }
+           let senderUIDs = messages.map { $0.senderUID }
+           uniqueSenderUIDs = Array(Set(senderUIDs))
+       }
     
     func fetchContactedUsers() {
         let currentUserUID = Auth.auth().currentUser?.uid ?? ""
-
-        // Fetch all unique UIDs from messages where the current user is either the sender or receiver
+        
         let contactedSenderUIDs = Set(messages
             .filter { $0.senderUID == currentUserUID || $0.receiverUID == currentUserUID }
             .map { $0.senderUID != currentUserUID ? $0.senderUID : $0.receiverUID }
@@ -78,6 +77,17 @@ class MessageManager: ObservableObject {
         uniqueContactedSenderUIDs = Array(contactedSenderUIDs)
     }
 
+
+    func updateContactedUIDs() {
+            let currentUserUID = Auth.auth().currentUser?.uid ?? ""
+            
+            let contactedSenderUIDs = Set(messages.filter { $0.receiverUID == currentUserUID }.map { $0.senderUID })
+            uniqueContactedSenderUIDs = Array(contactedSenderUIDs)
+        }
+
+        var combinedContactedUIDs: [String] {
+            return Array(Set(uniqueContactedSenderUIDs + uniqueSenderUIDs))
+        }
 
 }
 

@@ -81,8 +81,6 @@ struct ContentView: View {
                 isUserLoggedIn = true
                 messageManager.loadMessagesAndContacts()
                 messageManager.fetchContactedUsers()
-               
-                
             }
         }
     }

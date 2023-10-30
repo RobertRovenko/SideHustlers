@@ -47,7 +47,6 @@ struct HomeView: View {
                                 contacts: $contacts,
                                 onContactMakerTapped: { contactEmail in
                                     contacts.append(chore.id)
-                                    sendMessageAndRefreshList(choreId: chore.id, contactEmail: contactEmail)
                                 }, messageManager: messageManager
                         ))
                     {
@@ -66,14 +65,6 @@ struct HomeView: View {
         }
     }
                 
-    private func sendMessageAndRefreshList(choreId: String, contactEmail: String) {
-            // Send the message to the contact
-            // ...
-
-            // After sending the message, refresh the list of conversations
-            messageManager.fetchContactedUsers()
-        }
-
     private func navigateToChoreDetail(chore: Chore) {
         NavigationLink(
             destination: ChoreDetailView(
@@ -125,7 +116,7 @@ struct ChoreDetailView: View {
                     
                     Button(action: {
                         addContactToFirebase(chore.createdBy)
-                        messageManager.loadMessagesAndContacts()
+                      
                     }) {
                         Text("Contact Maker")
                             .foregroundColor(.white)
@@ -153,27 +144,27 @@ struct ChoreDetailView: View {
 
     
     func addContactToFirebase(_ contactEmail: String) {
-           
-            let db = Firestore.firestore()
+               
+                let db = Firestore.firestore()
 
-            db.collection("users").whereField("email", isEqualTo: contactEmail).getDocuments { querySnapshot, error in
-                if let error = error {
-                    print("Error looking up user: \(error.localizedDescription)")
-                    return
+                db.collection("users").whereField("email", isEqualTo: contactEmail).getDocuments { querySnapshot, error in
+                    if let error = error {
+                        print("Error looking up user: \(error.localizedDescription)")
+                        return
+                    }
+
+                    guard let document = querySnapshot?.documents.first else {
+                        print("User with email not found")
+                        return
+                    }
+
+                    let contactUID = document.documentID
+                    
+                    sendMessage(to: contactUID)
+                    messageManager.loadMessagesAndContacts()
                 }
-
-                guard let document = querySnapshot?.documents.first else {
-                    print("User with email not found")
-                    return
-                }
-
-                let contactUID = document.documentID
-                
-                sendMessage(to: contactUID)
-                messageManager.loadMessagesAndContacts()
-                messageManager.fetchContactedUsers()
             }
-        }
+        
     
     
     func sendMessage(to receiverUID: String) {
@@ -182,26 +173,29 @@ struct ChoreDetailView: View {
             return
         }
         
-        let messageContent = "Hej, jag är intreserad av din annons - \(chore.title)"
-        
-        let db = Firestore.firestore()
-        let messageCollection = db.collection("messages")
+        // Check if the senderUID is different from the receiverUID
+        if currentUser.uid != receiverUID {
+            let messageContent = "Hej, jag är intresserad av din annons - \(chore.title)"
+            
+            let db = Firestore.firestore()
+            let messageCollection = db.collection("messages")
 
-        let messageData = [
-            "sender": currentUser.uid,
-            "receiver": receiverUID,
-            "content": messageContent,
-            "timestamp": Timestamp(date: Date()) ] as [String: Any]
+            let messageData = [
+                "sender": currentUser.uid,
+                "receiver": receiverUID,
+                "content": messageContent,
+                "timestamp": Timestamp(date: Date())
+            ] as [String: Any]
 
-        messageCollection.addDocument(data: messageData) { error in
-            if let error = error {
-                print("Error sending message: \(error.localizedDescription)")
-            } else {
-                print("Message sent successfully")
-               
-                messageManager.fetchContactedUsers()
-                messageManager.loadMessagesAndContacts()
-                
+            messageCollection.addDocument(data: messageData) { error in
+                if let error = error {
+                    print("Error sending message: \(error.localizedDescription)")
+                } else {
+                    print("Message sent successfully")
+                   
+                    messageManager.fetchContactedUsers()
+                    messageManager.loadMessagesAndContacts()
+                }
             }
         }
     }
