@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		DA0516D02ADB478700A31629 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0516CF2ADB478700A31629 /* Message.swift */; };
+		DA19E0DA2AF18F690082BDCD /* SplashScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA19E0D92AF18F690082BDCD /* SplashScreen.swift */; };
 		DA62F3512ADA8E1A009189EB /* sidehustlersApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA62F3502ADA8E1A009189EB /* sidehustlersApp.swift */; };
 		DA62F3532ADA8E1A009189EB /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA62F3522ADA8E1A009189EB /* ContentView.swift */; };
 		DA62F3552ADA8E1C009189EB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DA62F3542ADA8E1C009189EB /* Assets.xcassets */; };
@@ -55,6 +56,7 @@
 
 /* Begin PBXFileReference section */
 		DA0516CF2ADB478700A31629 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
+		DA19E0D92AF18F690082BDCD /* SplashScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreen.swift; sourceTree = "<group>"; };
 		DA62F34D2ADA8E1A009189EB /* sidehustlers.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = sidehustlers.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA62F3502ADA8E1A009189EB /* sidehustlersApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = sidehustlersApp.swift; sourceTree = "<group>"; };
 		DA62F3522ADA8E1A009189EB /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -179,6 +181,7 @@
 				DA62F3922ADAA0EF009189EB /* TasksView.swift */,
 				DA62F3942ADAA0FB009189EB /* ProfileView.swift */,
 				DA62F3962ADAAA14009189EB /* AuthenticationView.swift */,
+				DA19E0D92AF18F690082BDCD /* SplashScreen.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -339,6 +342,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DA19E0DA2AF18F690082BDCD /* SplashScreen.swift in Sources */,
 				DA62F38F2ADAA031009189EB /* MessagesView.swift in Sources */,
 				DA62F38D2ADAA01C009189EB /* HomeView.swift in Sources */,
 				DA62F3532ADA8E1A009189EB /* ContentView.swift in Sources */,

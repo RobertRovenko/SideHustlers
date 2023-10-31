@@ -44,13 +44,26 @@ struct ChoreRowView: View {
     var chore: Chore
 
     var body: some View {
-        VStack(alignment: .leading) {
+        VStack(alignment: .leading, spacing: 4) {
             Text(chore.title)
-                .font(.headline)
+                .font(.body)
+                .fontWeight(.bold)
+                .foregroundColor(.primary)
+            
             Text(chore.description)
-                .font(.subheadline)
-            Text("Reward: \(chore.reward)")
-                .font(.subheadline)
+                .font(.body)
+                .foregroundColor(.primary)
+            
+            HStack {
+                Image(systemName: "dollarsign.circle.fill")
+                    .resizable()
+                    .frame(width: 20, height: 20)
+                    .foregroundColor(.green)
+                Text("Salary: \(chore.reward) kr")
+                    .font(.subheadline)
+                    .foregroundColor(.primary)
+            }
         }
+
     }
 }

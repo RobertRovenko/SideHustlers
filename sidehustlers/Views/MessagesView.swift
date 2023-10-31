@@ -34,17 +34,24 @@ struct MessagesView: View {
                               if let contactEmail = messageManager.contacts.first(where: { $0.value == uid })?.key {
                                   NavigationLink(destination: ChatView(contactEmail: contactEmail, receiverUID: uid, messageManager: messageManager)) {
                                       HStack {
+                                          Image(systemName: "person.circle.fill")
+                                            .resizable()
+                                            .frame(width: 40, height: 40)
+                                            .foregroundColor(.gray)
+                                         
+                                          Spacer().frame(width: 15)
+                                          
                                         Text(contactEmail)
                                             .font(.headline)
                                             .foregroundColor(.primary)
                                         Spacer()
-                                        Text("Today")
+                                        Text("")
                                             .font(.subheadline)
-                                            .foregroundColor(.secondary)
+                                            .foregroundColor(.blue)
                                     }
                                     .padding(.vertical, 10)
                                     .cornerRadius(10)
-                                    .padding(.horizontal, 10)
+                                    //.padding(.horizontal, 5)
                                     .listRowInsets(EdgeInsets())
                                 }
                                 .swipeActions {

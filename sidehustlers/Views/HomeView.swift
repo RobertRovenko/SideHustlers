@@ -29,7 +29,7 @@ struct HomeView: View {
                     .frame(width: 100, height: 100)
 
                 HStack {
-                    Text("Available Tasks")
+                    Text("Available Work")
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .font(.headline)
                         .fontWeight(.bold)
@@ -50,10 +50,26 @@ struct HomeView: View {
                                 }, messageManager: messageManager
                         ))
                     {
-                    VStack(alignment: .leading) {
-                        Text(chore.title)
-                        Text("Reward: \(chore.reward) kr")
-                    }
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text(chore.title)
+                                .font(.body)
+                                .fontWeight(.bold)
+                                .foregroundColor(.primary)
+                            
+                            Spacer().frame(height: 8)
+                            
+                            HStack {
+                                Image(systemName: "dollarsign.circle.fill")
+                                    .resizable()
+                                    .frame(width: 20, height: 20)
+                                    .foregroundColor(.green)
+                                
+                                
+                                Text("Salary: \(chore.reward) kr")
+                                    .font(.subheadline)
+                                    .foregroundColor(.secondary)
+                            }
+                        }
                 }
             }
         }
