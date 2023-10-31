@@ -162,6 +162,7 @@ struct ChoreDetailView: View {
                     
                     sendMessage(to: contactUID)
                     messageManager.loadMessagesAndContacts()
+                    messageManager.fetchContactedUsers()
                 }
             }
         
@@ -193,8 +194,9 @@ struct ChoreDetailView: View {
                 } else {
                     print("Message sent successfully")
                    
-                    messageManager.fetchContactedUsers()
+                   
                     messageManager.loadMessagesAndContacts()
+                    messageManager.fetchContactedUsers()
                 }
             }
         }

@@ -30,10 +30,10 @@ struct MessagesView: View {
                         .foregroundColor(.primary)
                         .padding()
                     List {
-                        ForEach(chatViews.sorted(by: { $0.value.last?.timestamp ?? .distantPast > $1.value.last?.timestamp ?? .distantPast }), id: \.key) { (uid, messages) in
-                            if let contactEmail = messageManager.contacts.first(where: { $0.value == uid })?.key {
-                                NavigationLink(destination: ChatView(contactEmail: contactEmail, receiverUID: uid, messageManager: messageManager)) {
-                                    HStack {
+                        ForEach(chatViews.sorted(by: { _, _ in false }), id: \.key) { (uid, messages) in
+                              if let contactEmail = messageManager.contacts.first(where: { $0.value == uid })?.key {
+                                  NavigationLink(destination: ChatView(contactEmail: contactEmail, receiverUID: uid, messageManager: messageManager)) {
+                                      HStack {
                                         Text(contactEmail)
                                             .font(.headline)
                                             .foregroundColor(.primary)
@@ -63,28 +63,44 @@ struct MessagesView: View {
             
             messageManager.loadMessagesAndContacts()
             messageManager.fetchContactedUsers()
+            updateChatViews(messages: messageManager.messages)
+            print(chatViews)
             
         }
         .onReceive(messageManager.$messages) { newMessages in
-            updateChatViews(messages: newMessages)
-        }
+                // Instead of clearing the chatViews dictionary, update it incrementally
+                let currentUserUID = Auth.auth().currentUser?.uid
+                
+                for message in newMessages {
+                    let otherUID = (message.senderUID == currentUserUID) ? message.receiverUID : message.senderUID
+                    
+                    if chatViews[otherUID] == nil {
+                        chatViews[otherUID] = [message]
+                    } else {
+                        // Check if the message is not already in the chatViews[otherUID]
+                        if !(chatViews[otherUID]?.contains(message))! {
+                            chatViews[otherUID]?.append(message)
+                        }
+                    }
+                }
+            }
     }
 
     private func updateChatViews(messages: [Message]) {
-        chatViews.removeAll()
+            chatViews = [:] // Clear the dictionary to avoid old chat views
 
-        let currentUserUID = Auth.auth().currentUser?.uid
+            let currentUserUID = Auth.auth().currentUser?.uid
 
-        for message in messages {
-            let otherUID = (message.senderUID == currentUserUID) ? message.receiverUID : message.senderUID
+            for message in messages {
+                let otherUID = (message.senderUID == currentUserUID) ? message.receiverUID : message.senderUID
 
-            if chatViews[otherUID] == nil {
-                chatViews[otherUID] = [message]
-            } else {
-                chatViews[otherUID]?.append(message)
+                if chatViews[otherUID] == nil {
+                    chatViews[otherUID] = [message]
+                } else {
+                    chatViews[otherUID]?.append(message)
+                }
             }
         }
-    }
 
 }
 
