@@ -33,6 +33,7 @@
 		DA62F39C2ADACFFB009189EB /* Chores.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA62F39B2ADACFFB009189EB /* Chores.swift */; };
 		DA62F3A02ADAD2B7009189EB /* ChoreViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA62F39F2ADAD2B7009189EB /* ChoreViewModel.swift */; };
 		DA6338C12ADD876D00E6FDC2 /* UserSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6338C02ADD876D00E6FDC2 /* UserSettings.swift */; };
+		DA6C644A2AF2652100CB1BE4 /* ChoreEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6C64492AF2652100CB1BE4 /* ChoreEditView.swift */; };
 		DA6DB1CF2AEE8EB9008522BB /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6DB1CE2AEE8EB9008522BB /* Contact.swift */; };
 		DAEF92942AE26EB700B449D6 /* MessagesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAEF92932AE26EB700B449D6 /* MessagesManager.swift */; };
 /* End PBXBuildFile section */
@@ -77,6 +78,7 @@
 		DA62F39B2ADACFFB009189EB /* Chores.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chores.swift; sourceTree = "<group>"; };
 		DA62F39F2ADAD2B7009189EB /* ChoreViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChoreViewModel.swift; sourceTree = "<group>"; };
 		DA6338C02ADD876D00E6FDC2 /* UserSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSettings.swift; sourceTree = "<group>"; };
+		DA6C64492AF2652100CB1BE4 /* ChoreEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChoreEditView.swift; sourceTree = "<group>"; };
 		DA6DB1CE2AEE8EB9008522BB /* Contact.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Contact.swift; sourceTree = "<group>"; };
 		DAEF92932AE26EB700B449D6 /* MessagesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -182,6 +184,7 @@
 				DA62F3942ADAA0FB009189EB /* ProfileView.swift */,
 				DA62F3962ADAAA14009189EB /* AuthenticationView.swift */,
 				DA19E0D92AF18F690082BDCD /* SplashScreen.swift */,
+				DA6C64492AF2652100CB1BE4 /* ChoreEditView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -342,6 +345,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DA6C644A2AF2652100CB1BE4 /* ChoreEditView.swift in Sources */,
 				DA19E0DA2AF18F690082BDCD /* SplashScreen.swift in Sources */,
 				DA62F38F2ADAA031009189EB /* MessagesView.swift in Sources */,
 				DA62F38D2ADAA01C009189EB /* HomeView.swift in Sources */,

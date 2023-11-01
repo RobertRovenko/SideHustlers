@@ -17,6 +17,7 @@ struct ProfileView: View {
     @State private var showAlert = false
     @State private var alertType: AlertType? = nil
     @State private var alertMessage = ""
+    @State private var userUID = ""
     
     enum AlertType {
         case logOut
@@ -89,6 +90,9 @@ struct ProfileView: View {
             } else if let user = Auth.auth().currentUser {
                 userEmail = user.email ?? "Welcome!"
                 UserDefaults.standard.set(userEmail, forKey: "userEmail")
+            
+                    userUID = user.uid
+                    print("User UID: \(userUID)")
             }
         }
     }

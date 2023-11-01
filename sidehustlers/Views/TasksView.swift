@@ -8,10 +8,10 @@
 import SwiftUI
 import FirebaseAuth
 
+
 struct TasksView: View {
     @Binding var selectedTab: Int
     @EnvironmentObject var choreViewModel: ChoreViewModel
-
     @State private var userUID = ""
 
     var body: some View {
@@ -26,7 +26,9 @@ struct TasksView: View {
 
                 List {
                     ForEach(choreViewModel.chores.filter { $0.author == userUID }) { chore in
+                        NavigationLink(destination: ChoreEditView(chore: chore)) {
                         ChoreRowView(chore: chore)
+                        }
                     }
                 }
             }
@@ -50,9 +52,13 @@ struct ChoreRowView: View {
                 .fontWeight(.bold)
                 .foregroundColor(.primary)
             
+            Spacer().frame(height: 8)
+            
             Text(chore.description)
                 .font(.body)
-                .foregroundColor(.primary)
+                .foregroundColor(.secondary)
+            
+            Spacer().frame(height: 8)
             
             HStack {
                 Image(systemName: "dollarsign.circle.fill")
@@ -61,9 +67,11 @@ struct ChoreRowView: View {
                     .foregroundColor(.green)
                 Text("Salary: \(chore.reward) kr")
                     .font(.subheadline)
-                    .foregroundColor(.primary)
+                    .foregroundColor(.secondary)
+                
+                Spacer()
+                    
             }
         }
-
     }
 }

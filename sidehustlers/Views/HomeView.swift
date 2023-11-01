@@ -50,24 +50,35 @@ struct HomeView: View {
                                 }, messageManager: messageManager
                         ))
                     {
-                        VStack(alignment: .leading, spacing: 4) {
-                            Text(chore.title)
-                                .font(.body)
-                                .fontWeight(.bold)
-                                .foregroundColor(.primary)
+                        HStack{
+                          
+                            Image(systemName: "person.2.fill")
+                                .resizable()
+                                .frame(width: 45, height: 30)
+                                .foregroundColor(.gray)
                             
-                            Spacer().frame(height: 8)
+                            Spacer().frame(width: 20)
                             
-                            HStack {
-                                Image(systemName: "dollarsign.circle.fill")
-                                    .resizable()
-                                    .frame(width: 20, height: 20)
-                                    .foregroundColor(.green)
+                            VStack(alignment: .leading, spacing: 4) {
                                 
+                                Text(chore.title)
+                                    .font(.body)
+                                    .fontWeight(.bold)
+                                    .foregroundColor(.primary)
                                 
-                                Text("Salary: \(chore.reward) kr")
-                                    .font(.subheadline)
-                                    .foregroundColor(.secondary)
+                                Spacer().frame(height: 8)
+                                
+                                HStack {
+                                    Image(systemName: "dollarsign.circle.fill")
+                                        .resizable()
+                                        .frame(width: 20, height: 20)
+                                        .foregroundColor(.green)
+                                    
+                                    
+                                    Text("Salary: \(chore.reward) kr")
+                                        .font(.subheadline)
+                                        .foregroundColor(.secondary)
+                                }
                             }
                         }
                 }
@@ -102,6 +113,7 @@ struct ChoreDetailView: View {
     @Binding var contacts: [String]
     var onContactMakerTapped: (String) -> Void
     @ObservedObject var messageManager: MessageManager
+    @State private var isDetailViewActive = false
     
     var body: some View {
         ZStack {
@@ -112,27 +124,27 @@ struct ChoreDetailView: View {
             VStack {
                 MapView()
                     .frame(height: 200)
-                    .padding()
-                
+                   
                 VStack {
                     Text(chore.title)
-                        .font(.title)
-                        .padding()
-                        .frame(maxWidth: .infinity, alignment: .center)
+                      .font(.title)
+                      .padding()
+                      .frame(maxWidth: .infinity, alignment: .center)
 
                     Text(chore.description)
                         .padding()
                         .frame(maxWidth: .infinity, alignment: .center)
 
-                    
                     Spacer()
                     
                     Text("\(chore.reward) kr")
                         .padding()
                     
                     Button(action: {
+    
                         addContactToFirebase(chore.createdBy)
-                      
+                        selectedTab = 1
+                        
                     }) {
                         Text("Contact Maker")
                             .foregroundColor(.white)
@@ -190,7 +202,7 @@ struct ChoreDetailView: View {
             return
         }
         
-        // Check if the senderUID is different from the receiverUID
+        //Check if the senderUID is not the receiverUID
         if currentUser.uid != receiverUID {
             let messageContent = "Hej, jag är intresserad av din annons - \(chore.title)"
             

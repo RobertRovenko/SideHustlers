@@ -32,7 +32,6 @@ struct PostView: View {
     var body: some View {
         NavigationView {
             ZStack {
-               
                 VStack {                    
                     VStack {
                         Section(header:
