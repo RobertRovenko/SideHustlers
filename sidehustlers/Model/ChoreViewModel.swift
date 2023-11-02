@@ -34,6 +34,17 @@ class ChoreViewModel: ObservableObject {
         }
     }
 
+    func deleteChore(_ chore: Chore) {
+        let choreRef = db.collection("chores").document(chore.id)
+        choreRef.delete { error in
+            if let error = error {
+                print("Error deleting chore: \(error)")
+            } else {
+                print("Chore deleted successfully")
+            }
+        }
+    }
+
 
     func fetchChores() {
         db.collection("chores").addSnapshotListener { querySnapshot, error in
