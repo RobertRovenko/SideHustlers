@@ -15,8 +15,8 @@ struct Chore: Identifiable, Encodable {
     var createdBy: String
     var author: String
 
-    init(title: String, description: String, reward: Int, createdBy: String, author: String) {
-        self.id = UUID().uuidString
+    init(id: String, title: String, description: String, reward: Int, createdBy: String, author: String) {
+        self.id = id
         self.title = title
         self.description = description
         self.reward = reward

@@ -11,7 +11,7 @@ import FirebaseAuth
 
 struct PostView: View {
     @Binding var selectedTab: Int
-    @State private var chore = Chore(title: "", description: "", reward: 0, createdBy: "", author: "")
+    @State private var chore = Chore(id: "", title: "", description: "", reward: 0, createdBy: "", author: "")
     @EnvironmentObject var choreViewModel: ChoreViewModel
     @State private var showAlert = false
     @State private var selectedCity = "Stockholm"
@@ -90,9 +90,13 @@ struct PostView: View {
                                     if let userEmail = currentUserEmail, let userUID = Auth.auth().currentUser?.uid {
                                         chore.createdBy = userEmail
                                         chore.author = userUID
-                                        choreViewModel.addChore(chore: chore, createdBy: userEmail)
-                                        showAlert = true
-                                        clearFields()
+                                        choreViewModel.addChore(chore: chore, createdBy: userEmail) { documentID in
+                                            if let documentID = documentID {
+                                                chore.id = documentID
+                                                showAlert = true
+                                                clearFields()
+                                                }
+                                            }
                                     } else {
                                         // Handle the case where the user or UID is not available
                                     }

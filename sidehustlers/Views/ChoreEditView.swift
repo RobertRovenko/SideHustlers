@@ -11,18 +11,13 @@
     struct ChoreEditView: View {
         @EnvironmentObject var choreViewModel: ChoreViewModel
         @State private var chore: Chore
-            @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+          
 
-         
          init(chore: Chore) {
              _chore = State(initialValue: chore)
          }
        
-        func deleteChore() {
-               choreViewModel.deleteChore(chore)
-               self.presentationMode.wrappedValue.dismiss()
-           }
-
+      
         var body: some View {
             NavigationView {
                 ZStack {
@@ -79,7 +74,7 @@
                     }
                     .padding()
                     .navigationBarItems(trailing: Button(action: {
-                        deleteChore() 
+                        choreViewModel.deleteChore(chore: chore)
                                }) {
                                    Image(systemName: "trash")
                                     .foregroundColor(.red)
