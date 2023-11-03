@@ -122,7 +122,7 @@ struct ChoreDetailView: View {
                 .shadow(radius: 5)
             
             VStack {
-                MapView()
+                MapView(coordinate: CLLocationCoordinate2D(latitude: chore.location.latitude, longitude: chore.location.longitude))
                     .frame(height: 200)
                    
                 VStack {
@@ -232,15 +232,17 @@ struct ChoreDetailView: View {
 }
 
 struct MapView: UIViewRepresentable {
+    let coordinate: CLLocationCoordinate2D
+
+    init(coordinate: CLLocationCoordinate2D) {
+        self.coordinate = coordinate
+    }
    
     func makeUIView(context: Context) -> MKMapView {
         MKMapView()
     }
 
     func updateUIView(_ uiView: MKMapView, context: Context) {
-       
-        let coordinate = CLLocationCoordinate2D(latitude: 59.3293, longitude: 18.0686)
-        
         let region = MKCoordinateRegion(center: coordinate, span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05))
         uiView.setRegion(region, animated: true)
     }

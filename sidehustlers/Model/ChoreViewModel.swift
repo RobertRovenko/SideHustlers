@@ -22,10 +22,18 @@ class ChoreViewModel: ObservableObject {
         do {
             let encoder = JSONEncoder()
             let choreData = try encoder.encode(chore)
-            var choreDictionary = try JSONSerialization.jsonObject(with: choreData, options: []) as! [String: Any]
 
-            choreDictionary["createdBy"] = createdBy
-            choreDictionary["author"] = chore.author
+            let choreDictionary: [String: Any] = [
+                "title": chore.title,
+                "description": chore.description,
+                "reward": chore.reward,
+                "createdBy": createdBy,
+                "author": chore.author,
+                "locationData": [ // Include location data here
+                    "latitude": chore.location.latitude,
+                    "longitude": chore.location.longitude
+                ]
+            ]
 
             let documentReference = try db.collection("chores").addDocument(data: choreDictionary)
 
@@ -37,6 +45,8 @@ class ChoreViewModel: ObservableObject {
         }
     }
 
+
+/////////////////////////////
 
     func deleteChore(chore: Chore) {
         db.collection("chores").document(chore.id).delete { error in
@@ -60,26 +70,29 @@ class ChoreViewModel: ObservableObject {
             var fetchedChores: [Chore] = []
 
             for document in querySnapshot!.documents {
-                if let choreData = document.data() as? [String: Any] {
-                    if let title = choreData["title"] as? String,
-                       let description = choreData["description"] as? String,
-                       let reward = choreData["reward"] as? Int,
-                       let createdBy = choreData["createdBy"] as? String,
-                       let author = choreData["author"] as? String {
-                       
-                        let firestoreDocumentID = document.documentID // Get the Firestore document ID
+                if let choreData = document.data() as? [String: Any],
+                   let title = choreData["title"] as? String,
+                   let description = choreData["description"] as? String,
+                   let reward = choreData["reward"] as? Int,
+                   let createdBy = choreData["createdBy"] as? String,
+                   let author = choreData["author"] as? String,
+                   let locationData = choreData["locationData"] as? [String: Double], // Change "location" to "locationData"
+                   let latitude = locationData["latitude"],
+                   let longitude = locationData["longitude"] {
 
-                        let chore = Chore(id: firestoreDocumentID, title: title, description: description, reward: reward, createdBy: createdBy, author: author)
-                        fetchedChores.append(chore)
-                    }
+                    let firestoreDocumentID = document.documentID
+
+                    let chore = Chore(id: firestoreDocumentID, title: title, description: description, reward: reward, createdBy: createdBy, author: author, location: (latitude: latitude, longitude: longitude))
+                    fetchedChores.append(chore)
                 }
             }
-            
+
             self.chores = fetchedChores
             print("Fetched \(fetchedChores.count) chores ViewModel")
             print("Chores: \(fetchedChores)")
         }
     }
+
 
     func fetchChoresForUser(userUID: String) {
         self.db.collection("chores")
@@ -93,18 +106,20 @@ class ChoreViewModel: ObservableObject {
                 var fetchedChores: [Chore] = []
 
                 for document in querySnapshot!.documents {
-                    if let choreData = document.data() as? [String: Any] {
-                        if let title = choreData["title"] as? String,
-                           let description = choreData["description"] as? String,
-                           let reward = choreData["reward"] as? Int,
-                           let createdBy = choreData["createdBy"] as? String,
-                           let author = choreData["author"] as? String {
-                           
-                            let firestoreDocumentID = document.documentID // Get the Firestore document ID
+                    if let choreData = document.data() as? [String: Any],
+                       let title = choreData["title"] as? String,
+                       let description = choreData["description"] as? String,
+                       let reward = choreData["reward"] as? Int,
+                       let createdBy = choreData["createdBy"] as? String,
+                       let author = choreData["author"] as? String,
+                       let locationData = choreData["location"] as? [String: Double],
+                       let latitude = locationData["latitude"],
+                       let longitude = locationData["longitude"] {
 
-                            let chore = Chore(id: firestoreDocumentID, title: title, description: description, reward: reward, createdBy: createdBy, author: author)
-                            fetchedChores.append(chore)
-                        }
+                        let firestoreDocumentID = document.documentID
+
+                        let chore = Chore(id: firestoreDocumentID, title: title, description: description, reward: reward, createdBy: createdBy, author: author, location: (latitude: latitude, longitude: longitude))
+                        fetchedChores.append(chore)
                     }
                 }
 
@@ -112,5 +127,6 @@ class ChoreViewModel: ObservableObject {
                 print("Fetched Chores for user \(userUID): \(fetchedChores)")
             }
     }
+
 
 }

@@ -8,10 +8,11 @@
 import SwiftUI
 import Firebase
 import FirebaseAuth
+import MapKit
 
 struct PostView: View {
     @Binding var selectedTab: Int
-    @State private var chore = Chore(id: "", title: "", description: "", reward: 0, createdBy: "", author: "")
+    @State private var chore = Chore(id: "", title: "", description: "", reward: 0, createdBy: "", author: "", location: (latitude: 59.3293, longitude: 18.0686))
     @EnvironmentObject var choreViewModel: ChoreViewModel
     @State private var showAlert = false
     @State private var selectedCity = "Stockholm"
@@ -82,6 +83,9 @@ struct PostView: View {
                             }
                             .pickerStyle(WheelPickerStyle())
                             .frame(height: 150)
+                            .onAppear {
+                                chore.location = getCoordinatesForCity(selectedCity)
+                            }
                         }
                         
                         Section {
@@ -90,6 +94,7 @@ struct PostView: View {
                                     if let userEmail = currentUserEmail, let userUID = Auth.auth().currentUser?.uid {
                                         chore.createdBy = userEmail
                                         chore.author = userUID
+                                        chore.location = getCoordinatesForCity(selectedCity)
                                         choreViewModel.addChore(chore: chore, createdBy: userEmail) { documentID in
                                             if let documentID = documentID {
                                                 chore.id = documentID
@@ -136,6 +141,27 @@ struct PostView: View {
         chore.reward = 0
     }
 }
+
+func getCoordinatesForCity(_ city: String) -> (Double, Double) {
+    switch city {
+        case "Stockholm":
+            return (59.3293, 18.0686)
+        case "Uppsala":
+            return (59.8586, 17.6389)
+        case "Malmö":
+            return (55.6049, 13.0038)
+        case "Skåne":
+            return (55.9903, 13.5958)
+        case "Göteborg":
+            return (57.7089, 11.9746)
+        case "Helsingborg":
+            return (56.0465, 12.6945)
+        default:
+            return (59.3293, 18.0686)
+    }
+}
+
+
 
 struct RoundedTextFieldStyle: TextFieldStyle {
     func _body(configuration: TextField<Self._Label>) -> some View {
