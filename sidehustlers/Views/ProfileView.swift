@@ -8,6 +8,7 @@
 import SwiftUI
 import Firebase
 import FirebaseAuth
+import SwiftUI
 
 struct ProfileView: View {
     @Binding var selectedTab: Int
@@ -26,11 +27,36 @@ struct ProfileView: View {
     
     @State private var userEmail: String = "Welcome!"
     @ObservedObject var userSettings: UserSettings
-    
+    @State private var profileImage: Image?
+    @State private var profileImageURL: String = "" 
+    @StateObject private var imageLoader: ImageLoader = ImageLoader()
+
     var body: some View {
         NavigationView {
             VStack {
                 Spacer()
+                
+                Button(action: {
+                                  
+                    fetchRandomProfileImage()
+                }) {
+                    if let image = imageLoader.image {
+                     image
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                        .frame(width: 200, height: 200)
+                        .clipShape(Circle())
+                    } else {
+                        Image("SideHustlersIconSmall") // Use a placeholder image here
+                         .resizable()
+                         .aspectRatio(contentMode: .fit)
+                        .frame(width: 200, height: 200)
+                        .clipShape(Circle())
+                    }
+                }
+
+                Spacer()
+                
                 Text(userEmail)
                     .font(.title)
                 Spacer()
@@ -90,13 +116,31 @@ struct ProfileView: View {
             } else if let user = Auth.auth().currentUser {
                 userEmail = user.email ?? "Welcome!"
                 UserDefaults.standard.set(userEmail, forKey: "userEmail")
+                userUID = user.uid
+                print("User UID: \(userUID)")
+            }
+
+            PexelsAPI.fetchRandomProfileImage { imageURL in
+                if let imageURL = imageURL {
+                    profileImageURL = imageURL
+                    imageLoader.loadImage(from: imageURL)
+                }
+            }
+               
             
-                    userUID = user.uid
-                    print("User UID: \(userUID)")
+        }
+        
+    }
+    func fetchRandomProfileImage() {
+            PexelsAPI.fetchRandomProfileImage { imageURL in
+                if let imageURL = imageURL {
+                    profileImageURL = imageURL
+                    imageLoader.loadImage(from: imageURL)
+                }
             }
         }
-    }
 }
+
 
 func deleteAccount(isAuthViewPresented: Binding<Bool>) {
     let user = Auth.auth().currentUser

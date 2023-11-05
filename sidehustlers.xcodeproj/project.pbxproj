@@ -35,6 +35,7 @@
 		DA6338C12ADD876D00E6FDC2 /* UserSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6338C02ADD876D00E6FDC2 /* UserSettings.swift */; };
 		DA6C644A2AF2652100CB1BE4 /* ChoreEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6C64492AF2652100CB1BE4 /* ChoreEditView.swift */; };
 		DA6DB1CF2AEE8EB9008522BB /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6DB1CE2AEE8EB9008522BB /* Contact.swift */; };
+		DACDC38F2AF7D3B20096A845 /* PexelsAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACDC38E2AF7D3B20096A845 /* PexelsAPI.swift */; };
 		DAEF92942AE26EB700B449D6 /* MessagesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAEF92932AE26EB700B449D6 /* MessagesManager.swift */; };
 /* End PBXBuildFile section */
 
@@ -80,6 +81,7 @@
 		DA6338C02ADD876D00E6FDC2 /* UserSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSettings.swift; sourceTree = "<group>"; };
 		DA6C64492AF2652100CB1BE4 /* ChoreEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChoreEditView.swift; sourceTree = "<group>"; };
 		DA6DB1CE2AEE8EB9008522BB /* Contact.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Contact.swift; sourceTree = "<group>"; };
+		DACDC38E2AF7D3B20096A845 /* PexelsAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PexelsAPI.swift; sourceTree = "<group>"; };
 		DAEF92932AE26EB700B449D6 /* MessagesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -198,6 +200,7 @@
 				DA0516CF2ADB478700A31629 /* Message.swift */,
 				DAEF92932AE26EB700B449D6 /* MessagesManager.swift */,
 				DA6DB1CE2AEE8EB9008522BB /* Contact.swift */,
+				DACDC38E2AF7D3B20096A845 /* PexelsAPI.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -355,6 +358,7 @@
 				DA62F39C2ADACFFB009189EB /* Chores.swift in Sources */,
 				DA6DB1CF2AEE8EB9008522BB /* Contact.swift in Sources */,
 				DA0516D02ADB478700A31629 /* Message.swift in Sources */,
+				DACDC38F2AF7D3B20096A845 /* PexelsAPI.swift in Sources */,
 				DA62F3952ADAA0FB009189EB /* ProfileView.swift in Sources */,
 				DA62F3972ADAAA14009189EB /* AuthenticationView.swift in Sources */,
 				DA62F3A02ADAD2B7009189EB /* ChoreViewModel.swift in Sources */,

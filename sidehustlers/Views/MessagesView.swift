@@ -59,11 +59,6 @@ struct MessagesView: View {
                                     //.padding(.horizontal, 5)
                                     .listRowInsets(EdgeInsets())
                                 }
-                                .swipeActions {
-                                    Button("Delete", role: .destructive) {
-                                        // Delete the chat or perform your desired action
-                                    }
-                                }
                             }
                         }
                     }

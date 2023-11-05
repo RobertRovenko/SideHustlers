@@ -77,8 +77,6 @@ class MessageManager: ObservableObject {
         uniqueContactedSenderUIDs = Array(contactedSenderUIDs)
     }
 
-
-
     func updateContactedUIDs() {
             let currentUserUID = Auth.auth().currentUser?.uid ?? ""
             

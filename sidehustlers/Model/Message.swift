@@ -12,6 +12,7 @@ import FirebaseFirestore
 
 struct Message: Identifiable, Equatable {
     var id = UUID() // Use a UUID as a default identifier
+    let documentID: String // Add a documentID field
     let senderUID: String
     let receiverUID: String
     let content: String
@@ -26,13 +27,10 @@ struct Message: Identifiable, Equatable {
             return nil
         }
         
+        self.documentID = document.documentID // Set the documentID
         self.senderUID = senderUID
         self.receiverUID = receiverUID
         self.content = content
         self.timestamp = timestamp.dateValue()
-        
     }
-    
-    
-    
 }
