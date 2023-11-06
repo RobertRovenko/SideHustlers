@@ -117,7 +117,7 @@ struct ChoreDetailView: View {
     
     var body: some View {
         ZStack {
-            Color.white
+            Color(.systemBackground)
                 .cornerRadius(10)
                 .shadow(radius: 5)
             

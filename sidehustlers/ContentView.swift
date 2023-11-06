@@ -20,6 +20,7 @@ struct ContentView: View {
     @StateObject var messageManager = MessageManager()
     @State private var userUID: String = ""
     @State private var showSplashScreen = true
+    @AppStorage("isDarkThemeEnabled") private var isDarkThemeEnabled = false
     
     var body: some View {
         NavigationView {
@@ -63,7 +64,9 @@ struct ContentView: View {
                             }
                             .tag(3)
                         
-                        ProfileView(selectedTab: $selectedTab, isAuthViewPresented: $isAuthViewPresented, userSettings: userSettings  )
+                        ProfileView(selectedTab: $selectedTab,
+                                    isAuthViewPresented: $isAuthViewPresented,
+                                    userSettings: userSettings)
                             .tabItem {
                                 Image(systemName: "person.fill")
                                 Text("Profile")
@@ -80,7 +83,7 @@ struct ContentView: View {
                 .fullScreenCover(isPresented: $isAuthViewPresented) {
                     AuthenticationView(isAuthViewPresented: $isAuthViewPresented, isUserLoggedIn: $isUserLoggedIn, userSettings: userSettings)
                 }
-            
+                .preferredColorScheme(isDarkThemeEnabled ? .dark : .light)
                 .onAppear {
                     isUserLoggedIn = Auth.auth().currentUser != nil
                     if let user = Auth.auth().currentUser {
@@ -98,6 +101,7 @@ struct ContentView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
+            
     }
 }
 

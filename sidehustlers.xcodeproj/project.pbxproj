@@ -36,6 +36,7 @@
 		DA6C644A2AF2652100CB1BE4 /* ChoreEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6C64492AF2652100CB1BE4 /* ChoreEditView.swift */; };
 		DA6DB1CF2AEE8EB9008522BB /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6DB1CE2AEE8EB9008522BB /* Contact.swift */; };
 		DACDC38F2AF7D3B20096A845 /* PexelsAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACDC38E2AF7D3B20096A845 /* PexelsAPI.swift */; };
+		DAD13F492AF92C7F00958156 /* DarkModeKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD13F482AF92C7F00958156 /* DarkModeKey.swift */; };
 		DAEF92942AE26EB700B449D6 /* MessagesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAEF92932AE26EB700B449D6 /* MessagesManager.swift */; };
 /* End PBXBuildFile section */
 
@@ -82,6 +83,7 @@
 		DA6C64492AF2652100CB1BE4 /* ChoreEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChoreEditView.swift; sourceTree = "<group>"; };
 		DA6DB1CE2AEE8EB9008522BB /* Contact.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Contact.swift; sourceTree = "<group>"; };
 		DACDC38E2AF7D3B20096A845 /* PexelsAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PexelsAPI.swift; sourceTree = "<group>"; };
+		DAD13F482AF92C7F00958156 /* DarkModeKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DarkModeKey.swift; sourceTree = "<group>"; };
 		DAEF92932AE26EB700B449D6 /* MessagesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -201,6 +203,7 @@
 				DAEF92932AE26EB700B449D6 /* MessagesManager.swift */,
 				DA6DB1CE2AEE8EB9008522BB /* Contact.swift */,
 				DACDC38E2AF7D3B20096A845 /* PexelsAPI.swift */,
+				DAD13F482AF92C7F00958156 /* DarkModeKey.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -360,6 +363,7 @@
 				DA0516D02ADB478700A31629 /* Message.swift in Sources */,
 				DACDC38F2AF7D3B20096A845 /* PexelsAPI.swift in Sources */,
 				DA62F3952ADAA0FB009189EB /* ProfileView.swift in Sources */,
+				DAD13F492AF92C7F00958156 /* DarkModeKey.swift in Sources */,
 				DA62F3972ADAAA14009189EB /* AuthenticationView.swift in Sources */,
 				DA62F3A02ADAD2B7009189EB /* ChoreViewModel.swift in Sources */,
 				DA6338C12ADD876D00E6FDC2 /* UserSettings.swift in Sources */,

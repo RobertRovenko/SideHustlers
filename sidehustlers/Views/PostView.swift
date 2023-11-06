@@ -119,7 +119,7 @@ struct PostView: View {
                             }.padding()
                         }
                     }
-                    .background(Color.white)
+                    .background(Color(.systemBackground))
                 }
                 .padding()
                 .alert(isPresented: $showAlert) {

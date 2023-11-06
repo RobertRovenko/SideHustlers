@@ -27,15 +27,16 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 struct sidehustlersApp: App {
     @StateObject private var messageManager = MessageManager.shared
     @StateObject private var choreViewModel = ChoreViewModel()
-   
+    @State private var isDarkThemeEnabled = false
+
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
-    
+
     var body: some Scene {
         WindowGroup {
             ContentView()
                 .environmentObject(choreViewModel)
                 .environmentObject(messageManager)
+                .environment(\.isDarkModeEnabled, $isDarkThemeEnabled) // Set the dark mode environment here
         }
     }
 }
-

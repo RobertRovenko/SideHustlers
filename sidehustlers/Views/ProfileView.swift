@@ -13,7 +13,6 @@ import SwiftUI
 struct ProfileView: View {
     @Binding var selectedTab: Int
     @Binding var isAuthViewPresented: Bool
-    @State private var isDarkThemeEnabled = false
     @State private var isNotificationsEnabled = true
     @State private var showAlert = false
     @State private var alertType: AlertType? = nil
@@ -30,7 +29,9 @@ struct ProfileView: View {
     @State private var profileImage: Image?
     @State private var profileImageURL: String = "" 
     @StateObject private var imageLoader: ImageLoader = ImageLoader()
+    @AppStorage("isDarkThemeEnabled") private var isDarkThemeEnabled = false
 
+    
     var body: some View {
         NavigationView {
             VStack {
@@ -110,6 +111,7 @@ struct ProfileView: View {
                 secondaryButton: .cancel()
             )
         }
+        .preferredColorScheme(isDarkThemeEnabled ? .dark : .light)
         .onAppear {
             if let storedEmail = UserDefaults.standard.string(forKey: "userEmail") {
                 userEmail = storedEmail
