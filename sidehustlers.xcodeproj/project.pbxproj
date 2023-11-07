@@ -123,13 +123,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		DA04FC112AFA4DBE008B8DE2 /* APIKey */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = APIKey;
-			sourceTree = "<group>";
-		};
 		DA62F3442ADA8E1A009189EB = {
 			isa = PBXGroup;
 			children = (
@@ -153,7 +146,6 @@
 		DA62F34F2ADA8E1A009189EB /* sidehustlers */ = {
 			isa = PBXGroup;
 			children = (
-				DA04FC112AFA4DBE008B8DE2 /* APIKey */,
 				DA62F3982ADAABB2009189EB /* Model */,
 				DA62F38B2ADAA006009189EB /* Views */,
 				DA62F3502ADA8E1A009189EB /* sidehustlersApp.swift */,
@@ -161,8 +153,8 @@
 				DA62F37A2ADA92D2009189EB /* GoogleService-Info.plist */,
 				DA62F3542ADA8E1C009189EB /* Assets.xcassets */,
 				DA62F3562ADA8E1C009189EB /* Preview Content */,
-				DA04FC162AFA8D9D008B8DE2 /* APIKeys.plist */,
 				DA04FC182AFA8E71008B8DE2 /* .gitignore */,
+				DA04FC162AFA8D9D008B8DE2 /* APIKeys.plist */,
 			);
 			path = sidehustlers;
 			sourceTree = "<group>";

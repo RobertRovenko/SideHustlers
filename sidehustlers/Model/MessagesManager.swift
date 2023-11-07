@@ -18,13 +18,15 @@ class MessageManager: ObservableObject {
     static let shared = MessageManager()
     
     func loadMessagesAndContacts() {
-        
         let messagesCollection = Firestore.firestore().collection("messages")
-        messagesCollection.getDocuments { [self] (snapshot, error) in
+        let messagesListener = messagesCollection.addSnapshotListener { [weak self] (snapshot, error) in
+            guard let self = self else { return }
+            
             if let error = error {
                 print("Error fetching messages: \(error.localizedDescription)")
                 return
             }
+            
             guard let documents = snapshot?.documents else { return }
             
             self.messages = documents.compactMap { document in
@@ -39,13 +41,17 @@ class MessageManager: ObservableObject {
             self.objectWillChange.send()
         }
         
+        // Store the messagesListener somewhere if you need to remove it later.
         
         let usersCollection = Firestore.firestore().collection("users")
-        usersCollection.getDocuments { [self] (snapshot, error) in
+        let usersListener = usersCollection.addSnapshotListener { [weak self] (snapshot, error) in
+            guard let self = self else { return }
+            
             if let error = error {
                 print("Error fetching users: \(error.localizedDescription)")
                 return
             }
+            
             guard let documents = snapshot?.documents else { return }
             
             self.contacts = Dictionary(uniqueKeysWithValues: documents.compactMap { document in
@@ -58,6 +64,8 @@ class MessageManager: ObservableObject {
             
             self.objectWillChange.send()
         }
+        
+        // Store the usersListener somewhere if you need to remove it later.
     }
 
     
