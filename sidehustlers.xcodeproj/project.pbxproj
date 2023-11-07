@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DA04FC132AFA4DED008B8DE2 /* APIKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA04FC122AFA4DED008B8DE2 /* APIKey.swift */; };
 		DA0516D02ADB478700A31629 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0516CF2ADB478700A31629 /* Message.swift */; };
 		DA19E0DA2AF18F690082BDCD /* SplashScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA19E0D92AF18F690082BDCD /* SplashScreen.swift */; };
 		DA62F3512ADA8E1A009189EB /* sidehustlersApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA62F3502ADA8E1A009189EB /* sidehustlersApp.swift */; };
@@ -58,6 +59,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		DA04FC122AFA4DED008B8DE2 /* APIKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKey.swift; sourceTree = "<group>"; };
 		DA0516CF2ADB478700A31629 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		DA19E0D92AF18F690082BDCD /* SplashScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreen.swift; sourceTree = "<group>"; };
 		DA62F34D2ADA8E1A009189EB /* sidehustlers.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = sidehustlers.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -119,6 +121,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		DA04FC112AFA4DBE008B8DE2 /* APIKey */ = {
+			isa = PBXGroup;
+			children = (
+				DA04FC122AFA4DED008B8DE2 /* APIKey.swift */,
+			);
+			path = APIKey;
+			sourceTree = "<group>";
+		};
 		DA62F3442ADA8E1A009189EB = {
 			isa = PBXGroup;
 			children = (
@@ -142,6 +152,7 @@
 		DA62F34F2ADA8E1A009189EB /* sidehustlers */ = {
 			isa = PBXGroup;
 			children = (
+				DA04FC112AFA4DBE008B8DE2 /* APIKey */,
 				DA62F3982ADAABB2009189EB /* Model */,
 				DA62F38B2ADAA006009189EB /* Views */,
 				DA62F3502ADA8E1A009189EB /* sidehustlersApp.swift */,
@@ -352,6 +363,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DA6C644A2AF2652100CB1BE4 /* ChoreEditView.swift in Sources */,
+				DA04FC132AFA4DED008B8DE2 /* APIKey.swift in Sources */,
 				DA19E0DA2AF18F690082BDCD /* SplashScreen.swift in Sources */,
 				DA62F38F2ADAA031009189EB /* MessagesView.swift in Sources */,
 				DA62F38D2ADAA01C009189EB /* HomeView.swift in Sources */,

@@ -19,7 +19,7 @@ class PexelsAPI {
         }
         
         var request = URLRequest(url: url)
-        request.setValue("myapikey", forHTTPHeaderField: "Authorization")
+        request.setValue("\(APIKey.apiKey)", forHTTPHeaderField: "Authorization")
         
         URLSession.shared.dataTask(with: request) { data, _, error in
             if let error = error {
