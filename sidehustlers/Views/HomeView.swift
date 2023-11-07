@@ -116,58 +116,58 @@ struct ChoreDetailView: View {
     @State private var isDetailViewActive = false
     
     var body: some View {
-        ZStack {
-            Color(.systemBackground)
-                .cornerRadius(10)
-                .shadow(radius: 5)
+        VStack {
+            Spacer()
+            
+            MapView(coordinate: CLLocationCoordinate2D(latitude: chore.location.latitude, longitude: chore.location.longitude))
+                .frame(height: 150)
             
             VStack {
-                MapView(coordinate: CLLocationCoordinate2D(latitude: chore.location.latitude, longitude: chore.location.longitude))
-                    .frame(height: 200)
-                   
-                VStack {
-                    Text(chore.title)
-                      .font(.title)
-                      .padding()
-                      .frame(maxWidth: .infinity, alignment: .center)
-
-                    Text(chore.description)
-                        .padding()
-                        .frame(maxWidth: .infinity, alignment: .center)
-
-                    Spacer()
-                    
-                    Text("\(chore.reward) kr")
-                        .padding()
-                    
-                    Button(action: {
-    
-                        addContactToFirebase(chore.createdBy)
-                        selectedTab = 1
-                        
-                    }) {
-                        Text("Contact Maker")
-                            .foregroundColor(.white)
-                            .padding()
-                            .background(Color.blue)
-                            .cornerRadius(10)
-                    }
-                }
-                .padding()
+                Text(chore.title)
+                    .font(.title)
+                    .padding()
+                    .frame(maxWidth: .infinity, alignment: .center)
+                
+                Text(chore.description)
+                    .padding()
+                    .frame(maxWidth: .infinity, alignment: .center)
                 
                 Spacer()
+                
+                Text("\(chore.reward) kr")
+                    .padding()
+                
+                Spacer()
+                
+                Button(action: {
+                    
+                    addContactToFirebase(chore.createdBy)
+                    selectedTab = 1
+                    
+                }) {
+                    Text("Contact Maker")
+                        .foregroundColor(.white)
+                        .padding()
+                        .background(Color.blue)
+                        .cornerRadius(10)
+                }
+                Spacer()
+                
             }
             .padding()
+            
+            Spacer()
         }
-        .padding()
-    
+      
         .navigationBarTitle(chore.title, displayMode: .inline)
-     
+        
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
-               
+                
+                
             }
         }
+        
     }
 
     

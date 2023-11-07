@@ -19,16 +19,19 @@ struct AuthenticationView: View {
     var body: some View {
         NavigationView {
             VStack {
-              
+              Spacer()
                 ZStack {
+                    
+                    Spacer()
+                    
                     GeometryReader { geometry in
                         Color.clear
-                            .frame(maxHeight: geometry.size.height * 0.7)
+                            .frame(maxHeight: geometry.size.height * 0.2)
                         }
-                        Image("SideHustlersIcon")
+                        Image("AuthenticationLogo")
                             .resizable()
                             .aspectRatio(contentMode: .fit)
-                            .frame(height: 275)
+                            .frame(height: 150)
                             .offset(y: -40)
                              }
                 
@@ -73,7 +76,7 @@ struct AuthenticationView: View {
                 .cornerRadius(10)
                 .padding()
 
-                Spacer()
+              
 
                 Button("Sign Up") {
                             Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
@@ -103,7 +106,7 @@ struct AuthenticationView: View {
                             }
                         }
                         .padding()
-                    
+                    Spacer()
             }
             .padding()
             Spacer()

@@ -75,7 +75,7 @@ struct MessagesView: View {
             
         }
         .onReceive(messageManager.$messages) { newMessages in
-                // Instead of clearing the chatViews dictionary, update it incrementally
+                //Instead of clearing the chatViews dictionary, update it incrementally
                 let currentUserUID = Auth.auth().currentUser?.uid
                 
                 for message in newMessages {

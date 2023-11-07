@@ -35,15 +35,17 @@
                                     .font(.headline)
                                     .foregroundColor(.blue)
                                
-                                TextEditor(text: $chore.description)
-                                    .padding()
-                                    .frame(height: 200)
-                                    .scrollContentBackground(.hidden)
-                                    .background(Color(UIColor.systemGray6))
-                                    .cornerRadius(8)
-                                    .padding()
-                                   
-                            }
+                                GeometryReader { geometry in
+                                    TextEditor(text: $chore.description)
+                                               .padding()
+                                               .frame(height: geometry.size.height * 0.6) // Adjust the multiplier as needed
+                                               .scrollContentBackground(.hidden)
+                                               .background(Color(UIColor.systemGray6))
+                                               .cornerRadius(8)
+                                               .padding()
+                                       }
+                                   }
+                            
                             
                             Section(header:
                                 Text("Reward")

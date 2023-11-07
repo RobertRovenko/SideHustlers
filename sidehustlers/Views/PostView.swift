@@ -35,7 +35,9 @@ struct PostView: View {
             ZStack {
                 VStack {                    
                     VStack {
+                        Spacer()
                         Section(header:
+                           
                             Text("Task Details")
                                 .font(.headline)
                                 .foregroundColor(.blue)
