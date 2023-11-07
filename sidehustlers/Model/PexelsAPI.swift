@@ -20,7 +20,7 @@ class PexelsAPI {
         
         if let path = Bundle.main.path(forResource: "APIKeys", ofType: "plist"),
               let dict = NSDictionary(contentsOfFile: path) as? [String: Any],
-           let apiKey = dict["APIKeys"] as? String {
+           let apiKey = dict["APIKey"] as? String {
             var request = URLRequest(url: url)
             request.setValue("\(apiKey)", forHTTPHeaderField: "Authorization")
             
