@@ -1,0 +1,14 @@
+
+# Ignore build artifacts
+/build/
+
+# Ignore user-specific settings
+/.idea/
+/.vscode/
+*.xcuserdatad
+
+# Ignore API key configuration files
+APIKeys.plist
+
+# Ignore log files
+*.log

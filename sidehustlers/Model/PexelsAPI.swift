@@ -18,37 +18,44 @@ class PexelsAPI {
             return
         }
         
-        var request = URLRequest(url: url)
-        request.setValue("\(APIKey.apiKey)", forHTTPHeaderField: "Authorization")
-        
-        URLSession.shared.dataTask(with: request) { data, _, error in
-            if let error = error {
-                print("Error fetching Pexels API data: \(error)")
-                completion(nil)
-                return
-            }
+        if let path = Bundle.main.path(forResource: "APIKeys", ofType: "plist"),
+              let dict = NSDictionary(contentsOfFile: path) as? [String: Any],
+           let apiKey = dict["APIKey"] as? String {
+            var request = URLRequest(url: url)
+            request.setValue("\(apiKey)", forHTTPHeaderField: "Authorization")
             
-            if let data = data {
-                do {
-                    let pexelsResponse = try JSONDecoder().decode(PexelsResponse.self, from: data)
-                    if !pexelsResponse.photos.isEmpty {
-                        let randomIndex = Int.random(in: 0..<pexelsResponse.photos.count)
-                        let photo = pexelsResponse.photos[randomIndex]
-                        if let imageURL = photo.src.medium {
-                            completion(imageURL)
+            
+            
+            
+            URLSession.shared.dataTask(with: request) { data, _, error in
+                if let error = error {
+                    print("Error fetching Pexels API data: \(error)")
+                    completion(nil)
+                    return
+                }
+                
+                if let data = data {
+                    do {
+                        let pexelsResponse = try JSONDecoder().decode(PexelsResponse.self, from: data)
+                        if !pexelsResponse.photos.isEmpty {
+                            let randomIndex = Int.random(in: 0..<pexelsResponse.photos.count)
+                            let photo = pexelsResponse.photos[randomIndex]
+                            if let imageURL = photo.src.medium {
+                                completion(imageURL)
+                            }
+                        } else {
+                            completion(nil)
                         }
-                    } else {
+                    } catch {
+                        print("Error decoding Pexels API response: \(error)")
                         completion(nil)
                     }
-                } catch {
-                    print("Error decoding Pexels API response: \(error)")
+                } else {
                     completion(nil)
                 }
-            } else {
-                completion(nil)
-            }
-            
-        }.resume()
+                
+            }.resume()
+        }
     }
 }
 
