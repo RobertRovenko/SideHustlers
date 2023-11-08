@@ -62,7 +62,13 @@
                         
                         Section {
                             Button(action: {
-                                // Add chore logic here
+                                choreViewModel.updateChore(chore: chore) { success in
+                                       if success {
+                                           // Handle successful update (e.g., show an alert)
+                                       } else {
+                                           // Handle update failure (e.g., show an error message)
+                                       }
+                                   }
                             }) {
                                 Text("Update Task")
                                     .font(.headline)

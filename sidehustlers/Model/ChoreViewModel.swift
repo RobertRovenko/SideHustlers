@@ -45,6 +45,37 @@ class ChoreViewModel: ObservableObject {
         }
     }
 
+    func updateChore(chore: Chore, completion: @escaping (Bool) -> Void) {
+        do {
+            let encoder = JSONEncoder()
+            let choreData = try encoder.encode(chore)
+
+            let choreDictionary: [String: Any] = [
+                "title": chore.title,
+                "description": chore.description,
+                "reward": chore.reward,
+                "createdBy": chore.createdBy,
+                "author": chore.author,
+                "locationData": [ // Include location data here
+                    "latitude": chore.location.latitude,
+                    "longitude": chore.location.longitude
+                ]
+            ]
+
+            db.collection("chores").document(chore.id).setData(choreDictionary, merge: true) { error in
+                if let error = error {
+                    print("Error updating chore: \(error)")
+                    completion(false)
+                } else {
+                    print("Chore updated successfully")
+                    completion(true)
+                }
+            }
+        } catch {
+            print("Error updating chore: \(error)")
+            completion(false)
+        }
+    }
 
 /////////////////////////////
 
