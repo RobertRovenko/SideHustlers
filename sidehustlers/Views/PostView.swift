@@ -16,6 +16,32 @@ struct PostView: View {
     @EnvironmentObject var choreViewModel: ChoreViewModel
     @State private var showAlert = false
     @State private var selectedCity = "Stockholm"
+    let titleMaxLength = 40
+    let descriptionMaxLength = 140
+    @State private var titleText: String = ""
+    @State private var descriptionText: String = ""
+
+    var titleBinding: Binding<String> {
+        Binding(
+            get: { self.titleText },
+            set: {
+                self.titleText = String($0.prefix(titleMaxLength))
+                self.chore.title = self.titleText
+            }
+        )
+    }
+
+    var descriptionBinding: Binding<String> {
+        Binding(
+            get: { self.descriptionText },
+            set: {
+                self.descriptionText = String($0.prefix(descriptionMaxLength))
+                self.chore.description = self.descriptionText
+            }
+        )
+    }
+
+
     
     let textFieldStyle: some TextFieldStyle = RoundedTextFieldStyle()
     
@@ -42,28 +68,26 @@ struct PostView: View {
                                 .font(.headline)
                                 .foregroundColor(.blue)
                         ) {
-                            TextField("Title", text: $chore.title)
+                            TextField("Title", text: titleBinding)
                                 .padding()
                                 .textFieldStyle(textFieldStyle)
                             
-                            TextField("Description", text: $chore.description)
+                            TextField("Description", text: descriptionBinding)
                                 .padding()
                                 .textFieldStyle(textFieldStyle)
                             
                             Section(header:
-                                    Text("Reward")
-                                        .font(.headline)
-                                        .foregroundColor(.blue)
+                                        Text("Reward")
+                                .font(.headline)
+                                .foregroundColor(.blue)
                             ) {
-                                
-                                
                                 TextField("Reward", text: Binding(
                                     get: {
                                         "\(chore.reward)"
                                     },
-                                    set: {
-                                        if let newValue = Int($0) {
-                                            chore.reward = newValue
+                                    set: { newValue in
+                                        if let intValue = Int(newValue), newValue.count <= 6 {
+                                            chore.reward = intValue
                                         }
                                     }
                                 ))

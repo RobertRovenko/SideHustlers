@@ -11,13 +11,52 @@
     struct ChoreEditView: View {
         @EnvironmentObject var choreViewModel: ChoreViewModel
         @State private var chore: Chore
-          
-
-         init(chore: Chore) {
+        init(chore: Chore) {
              _chore = State(initialValue: chore)
+             _titleText = State(initialValue: chore.title)
+             _descriptionText = State(initialValue: chore.description)
+             _rewardText = State(initialValue: String(chore.reward))
          }
-       
-      
+
+         let titleMaxLength = 40
+         let descriptionMaxLength = 140
+         let rewardMaxLength = 6
+
+         @State private var titleText: String
+         @State private var descriptionText: String
+         @State private var rewardText: String
+
+         var titleBinding: Binding<String> {
+             Binding(
+                 get: { self.titleText },
+                 set: {
+                     self.titleText = String($0.prefix(titleMaxLength))
+                     self.chore.title = self.titleText
+                 }
+             )
+         }
+
+         var descriptionBinding: Binding<String> {
+             Binding(
+                 get: { self.descriptionText },
+                 set: {
+                     self.descriptionText = String($0.prefix(descriptionMaxLength))
+                     self.chore.description = self.descriptionText
+                 }
+             )
+         }
+
+         var rewardBinding: Binding<String> {
+             Binding(
+                 get: { self.rewardText },
+                 set: {
+                     self.rewardText = String($0.prefix(rewardMaxLength))
+                     if let intValue = Int(self.rewardText) {
+                         self.chore.reward = intValue
+                     }
+                 }
+             )
+         }
         var body: some View {
             NavigationView {
                 ZStack {
@@ -28,35 +67,34 @@
                                     .font(.headline)
                                     .foregroundColor(.blue)
                             ) {
-                                TextField("Title", text: $chore.title)
-                                    .padding()
-                                    .textFieldStyle(RoundedTextStyle())
-                                Text("Description")
-                                    .font(.headline)
-                                    .foregroundColor(.blue)
-                               
-                                GeometryReader { geometry in
-                                    TextEditor(text: $chore.description)
-                                               .padding()
-                                               .frame(height: geometry.size.height * 0.6) // Adjust the multiplier as needed
-                                               .scrollContentBackground(.hidden)
-                                               .background(Color(UIColor.systemGray6))
-                                               .cornerRadius(8)
-                                               .padding()
-                                       }
-                                   }
-                            
-                            
+                                TextField("Title", text: titleBinding)
+                                                               .padding()
+                                                               .textFieldStyle(RoundedTextStyle())
+
+                                                           Text("Description")
+                                                               .font(.headline)
+                                                               .foregroundColor(.blue)
+
+                                                           GeometryReader { geometry in
+                                                               TextEditor(text: descriptionBinding)
+                                                                   .padding()
+                                                                   .frame(height: geometry.size.height * 0.8)
+                                                                   .scrollContentBackground(.hidden)
+                                                                   .background(Color(UIColor.systemGray6))
+                                                                   .cornerRadius(8)
+                                                                   .padding()
+                                                           }
+                                                       }
                             Section(header:
-                                Text("Reward")
-                                    .font(.headline)
-                                    .foregroundColor(.blue)
-                            ) {
-                                TextField("Reward", value: $chore.reward, formatter: NumberFormatter())
-                                    .padding()
-                                    .textFieldStyle(RoundedTextStyle())
-                            }
-                        }
+                                                       Text("Reward")
+                                                           .font(.headline)
+                                                           .foregroundColor(.blue)
+                                                   ) {
+                                                       TextField("Reward", text: rewardBinding)
+                                                           .padding()
+                                                           .textFieldStyle(RoundedTextStyle())
+                                                   }
+                                               }
                         
                         Spacer()
                         

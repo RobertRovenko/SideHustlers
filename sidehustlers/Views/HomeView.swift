@@ -128,10 +128,13 @@ struct ChoreDetailView: View {
                     .padding()
                     .frame(maxWidth: .infinity, alignment: .center)
                 
-                Text(chore.description)
-                    .padding()
-                    .frame(maxWidth: .infinity, alignment: .center)
-                
+                ScrollView {
+                    Text(chore.description)
+                        .padding()
+                        .frame(maxWidth: .infinity, alignment: .center)
+                        .fixedSize(horizontal: false, vertical: true) // Allow vertical scrolling
+                }
+
                 Spacer()
                 
                 Text("\(chore.reward) kr")
