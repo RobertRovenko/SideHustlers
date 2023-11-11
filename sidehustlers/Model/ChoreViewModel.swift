@@ -14,7 +14,6 @@ class ChoreViewModel: ObservableObject {
     @Published var chores: [Chore] = []
 
     init() {
-       
         fetchChores()
     }
 
@@ -77,8 +76,6 @@ class ChoreViewModel: ObservableObject {
         }
     }
 
-/////////////////////////////
-
     func deleteChore(chore: Chore) {
         db.collection("chores").document(chore.id).delete { error in
             if let error = error {
@@ -89,8 +86,6 @@ class ChoreViewModel: ObservableObject {
         }
     }
 
-
- 
     func fetchChores() {
         db.collection("chores").addSnapshotListener { querySnapshot, error in
             if let error = error {
@@ -123,7 +118,6 @@ class ChoreViewModel: ObservableObject {
             print("Chores: \(fetchedChores)")
         }
     }
-
 
     func fetchChoresForUser(userUID: String) {
         self.db.collection("chores")
@@ -158,6 +152,4 @@ class ChoreViewModel: ObservableObject {
                 print("Fetched Chores for user \(userUID): \(fetchedChores)")
             }
     }
-
-
 }

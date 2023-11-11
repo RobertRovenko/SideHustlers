@@ -162,10 +162,13 @@ struct PostView: View {
     }
     
     func clearFields() {
+        titleText = ""
+        descriptionText = ""
         chore.title = ""
         chore.description = ""
         chore.reward = 0
     }
+
     
 #if DEBUG
     var exposedTitleText: String {
