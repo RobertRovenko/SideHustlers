@@ -166,6 +166,20 @@ struct PostView: View {
         chore.description = ""
         chore.reward = 0
     }
+    
+#if DEBUG
+    var exposedTitleText: String {
+        titleText
+    }
+
+    var exposedDescriptionText: String {
+        descriptionText
+    }
+
+    var exposedChore: Chore {
+        chore
+    }
+    #endif
 }
 
 func getCoordinatesForCity(_ city: String) -> (Double, Double) {

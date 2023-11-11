@@ -36,7 +36,7 @@ struct sidehustlersApp: App {
             ContentView()
                 .environmentObject(choreViewModel)
                 .environmentObject(messageManager)
-                .environment(\.isDarkModeEnabled, $isDarkThemeEnabled) // Set the dark mode environment here
+                .environment(\.isDarkModeEnabled, $isDarkThemeEnabled)
         }
     }
 }
