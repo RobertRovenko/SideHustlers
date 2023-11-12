@@ -116,62 +116,69 @@ struct ChoreDetailView: View {
     @State private var isDetailViewActive = false
     
     var body: some View {
-        VStack {
-            Spacer()
-            
-            MapView(coordinate: CLLocationCoordinate2D(latitude: chore.location.latitude, longitude: chore.location.longitude))
-                .frame(height: 150)
-            
-            VStack {
-                Text(chore.title)
-                    .font(.title)
-                    .padding()
-                    .frame(maxWidth: .infinity, alignment: .center)
+        ScrollView {
+            VStack(spacing: 0) {
+                MapView(coordinate: CLLocationCoordinate2D(latitude: chore.location.latitude, longitude: chore.location.longitude))
+                    .frame(height: 200)
+                    .cornerRadius(12)
+                    .padding(.bottom, 8)
                 
-                ScrollView {
-                    Text(chore.description)
+                VStack(alignment: .leading, spacing: 16) {
+                    Text(chore.title)
+                        .font(.title)
                         .padding()
                         .frame(maxWidth: .infinity, alignment: .center)
-                        .fixedSize(horizontal: false, vertical: true) // Allow vertical scrolling
+                       
+                    
+                    Text(chore.description)
+                        .padding()
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        
+                        .fixedSize(horizontal: false, vertical: true)
+                    
+                    HStack {
+                        Spacer()
+                        
+                        Text("\(chore.reward) kr")
+                            .padding()
+                            .font(.title2)
+                            .bold()
+                            
+                        Spacer()
+                    }
+                    
+                   
                 }
-
-                Spacer()
-                
-                Text("\(chore.reward) kr")
-                    .padding()
-                
+                .background(Color(.systemBackground))
+                .cornerRadius(12)
+                .padding(.horizontal, 16)
+            }
+            
+            HStack {
                 Spacer()
                 
                 Button(action: {
-                    
                     addContactToFirebase(chore.createdBy)
                     selectedTab = 1
-                    
                 }) {
                     Text("Contact Maker")
                         .foregroundColor(.white)
                         .padding()
                         .background(Color.blue)
-                        .cornerRadius(10)
+                        .cornerRadius(12)
                 }
+                .padding(.top, 16)
+                    
                 Spacer()
-                
             }
-            .padding()
             
-            Spacer()
+            
+          
         }
-      
         .navigationBarTitle(chore.title, displayMode: .inline)
-        
-        .toolbar {
-            ToolbarItem(placement: .navigationBarLeading) {
-                
-                
-            }
-        }
-        
     }
+
+
 
     
     func addContactToFirebase(_ contactEmail: String) {
