@@ -5,42 +5,52 @@
 //  Created by Robert Falkbäck on 2023-10-14.
 //
 
-    import SwiftUI
-    import FirebaseAuth
+import SwiftUI
+import FirebaseAuth
 
 
-    struct TasksView: View {
-        @Binding var selectedTab: Int
-        @EnvironmentObject var choreViewModel: ChoreViewModel
-        @State private var userUID = ""
+struct TasksView: View {
+    @Binding var selectedTab: Int
+    @EnvironmentObject var choreViewModel: ChoreViewModel
+    @State private var userUID = ""
 
-        var body: some View {
-            NavigationView {
-                VStack {
-                    Text("Your Listings")
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .font(.headline)
-                        .fontWeight(.bold)
-                        .foregroundColor(.primary)
-                        .padding()
+    var body: some View {
+        NavigationView {
+            VStack {
+                Text("Your Listings")
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .font(.headline)
+                    .fontWeight(.bold)
+                    .foregroundColor(.primary)
+                    .padding()
 
-                    List {
-                        ForEach(choreViewModel.chores.filter { $0.author == userUID }) { chore in
+                List {
+                    // Use a separate variable to track if there are matching chores
+                    let userChores = choreViewModel.chores.filter { $0.author == userUID }
+                    
+                    if userChores.isEmpty {
+                        Text("You haven't created a chore yet!")
+                            .foregroundColor(.secondary)
+                            .padding()
+                    } else {
+                        ForEach(userChores) { chore in
                             NavigationLink(destination: ChoreEditView(chore: chore)) {
-                            ChoreRowView(chore: chore)
+                                ChoreRowView(chore: chore)
                             }
                         }
                     }
                 }
             }
-            .onAppear {
-                if let user = Auth.auth().currentUser {
-                    userUID = user.uid
-                    print("User UID: \(userUID)")
-                }
+        }
+        .onAppear {
+            if let user = Auth.auth().currentUser {
+                userUID = user.uid
+                print("User UID: \(userUID)")
             }
         }
     }
+}
+
 
     struct ChoreRowView: View {
         var chore: Chore
