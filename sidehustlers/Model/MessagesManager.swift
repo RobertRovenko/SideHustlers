@@ -44,27 +44,39 @@ class MessageManager: ObservableObject {
         // Store the messagesListener somewhere if you need to remove it later.
         
         let usersCollection = Firestore.firestore().collection("users")
-        let usersListener = usersCollection.addSnapshotListener { [weak self] (snapshot, error) in
-            guard let self = self else { return }
-            
-            if let error = error {
-                print("Error fetching users: \(error.localizedDescription)")
-                return
-            }
-            
-            guard let documents = snapshot?.documents else { return }
-            
-            self.contacts = Dictionary(uniqueKeysWithValues: documents.compactMap { document in
-                if let userData = UserData(document: document) {
-                    return (userData.email, userData.uid)
-                } else {
-                    return nil
-                }
-            })
-            
-            self.objectWillChange.send()
-        }
-        
+           let usersListener = usersCollection.addSnapshotListener { [weak self] (snapshot, error) in
+               guard let self = self else { return }
+
+               if let error = error {
+                   print("Error fetching users: \(error.localizedDescription)")
+                   return
+               }
+
+               guard let documents = snapshot?.documents else { return }
+
+               var tempContacts: [String: [String]] = [:]
+
+               for document in documents {
+                   if let userData = UserData(document: document) {
+                       let email = userData.email
+                       let uid = userData.uid
+
+                       // Check if the email is already in the dictionary
+                       if var existingUIDs = tempContacts[email] {
+                           existingUIDs.append(uid)
+                           tempContacts[email] = existingUIDs
+                       } else {
+                           // If the email is not in the dictionary, create a new entry
+                           tempContacts[email] = [uid]
+                       }
+                   }
+               }
+
+               // Now convert the temporary dictionary to the final dictionary
+               self.contacts = tempContacts.mapValues { $0.first ?? "" }
+
+               self.objectWillChange.send()
+           }
         // Store the usersListener somewhere if you need to remove it later.
     }
 

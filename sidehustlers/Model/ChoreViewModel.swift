@@ -75,6 +75,31 @@ class ChoreViewModel: ObservableObject {
             completion(false)
         }
     }
+    
+    func deleteAllChoresForUser(userUID: String) {
+        db.collection("chores")
+            .whereField("author", isEqualTo: userUID)
+            .getDocuments { querySnapshot, error in
+                if let error = error {
+                    print("Error getting documents: \(error)")
+                    return
+                }
+
+                for document in querySnapshot!.documents {
+                    let choreID = document.documentID
+                    self.deleteChoreByID(choreID)
+                }
+            }
+    }
+    private func deleteChoreByID(_ choreID: String) {
+        db.collection("chores").document(choreID).delete { error in
+            if let error = error {
+                print("Error deleting chore with ID \(choreID): \(error)")
+            } else {
+                print("Chore with ID \(choreID) deleted successfully")
+            }
+        }
+    }
 
     func deleteChore(chore: Chore) {
         db.collection("chores").document(chore.id).delete { error in

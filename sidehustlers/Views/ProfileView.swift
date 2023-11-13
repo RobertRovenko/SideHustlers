@@ -31,7 +31,7 @@ struct ProfileView: View {
     @State private var profileImageURL: String = "" 
     @StateObject private var imageLoader: ImageLoader = ImageLoader()
     @AppStorage("isDarkThemeEnabled") private var isDarkThemeEnabled = false
-
+    @ObservedObject var choreViewModel: ChoreViewModel = ChoreViewModel()
     
     var body: some View {
         NavigationView {
@@ -107,7 +107,7 @@ struct ProfileView: View {
                     if alertMessage == "Are you sure you want to log out?" {
                         logOut(isAuthViewPresented: $isAuthViewPresented)
                     } else if alertMessage == "Are you sure you want to delete your account?" {
-                        deleteAccount(isAuthViewPresented: $isAuthViewPresented)
+                        deleteAccount(isAuthViewPresented: $isAuthViewPresented, choreViewModel: choreViewModel)
                     }
                 },
                 secondaryButton: .cancel()
@@ -149,7 +149,7 @@ struct ProfileView: View {
 }
 
 
-func deleteAccount(isAuthViewPresented: Binding<Bool>) {
+func deleteAccount(isAuthViewPresented: Binding<Bool>, choreViewModel: ChoreViewModel) {
     let user = Auth.auth().currentUser
     
     user?.delete { error in
@@ -157,6 +157,8 @@ func deleteAccount(isAuthViewPresented: Binding<Bool>) {
             print("Error deleting account: \(error.localizedDescription)")
         } else {
             print("Account deleted successfully")
+            choreViewModel.deleteAllChoresForUser(userUID: user?.uid ?? "")
+            deleteCurrentUserDocument(userUID: user?.uid ?? "")
             do {
                 try Auth.auth().signOut()
                 UserDefaults.standard.removeObject(forKey: "userEmail")
@@ -168,6 +170,17 @@ func deleteAccount(isAuthViewPresented: Binding<Bool>) {
     }
 }
 
+func deleteCurrentUserDocument(userUID: String) {
+    let usersCollection = Firestore.firestore().collection("users")
+    
+    usersCollection.document(userUID).delete { error in
+        if let error = error {
+            print("Error deleting user document: \(error.localizedDescription)")
+        } else {
+            print("User document deleted successfully")
+        }
+    }
+}
 func logOut(isAuthViewPresented: Binding<Bool>) {
     do {
         try Auth.auth().signOut()
