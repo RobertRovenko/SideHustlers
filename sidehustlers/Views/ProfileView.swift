@@ -18,6 +18,7 @@ struct ProfileView: View {
     @State private var alertType: AlertType? = nil
     @State private var alertMessage = ""
     @State private var userUID = ""
+    @AppStorage("savedProfileImageURL") private var savedProfileImageURL: String = ""
     
     enum AlertType {
         case logOut
@@ -40,6 +41,7 @@ struct ProfileView: View {
                 Button(action: {
                                   
                     fetchRandomProfileImage()
+                    
                 }) {
                     if let image = imageLoader.image {
                      image
@@ -122,25 +124,28 @@ struct ProfileView: View {
                 print("User UID: \(userUID)")
             }
 
-            PexelsAPI.fetchRandomProfileImage { imageURL in
-                if let imageURL = imageURL {
-                    profileImageURL = imageURL
-                    imageLoader.loadImage(from: imageURL)
-                }
-            }
-               
-            
+         
+            // Load the saved profile picture URL
+               if let savedURL = UserDefaults.standard.string(forKey: "savedProfileImageURL"), !savedURL.isEmpty {
+                   profileImageURL = savedURL
+                   imageLoader.loadImage(from: savedURL)
+               }
         }
         
     }
     func fetchRandomProfileImage() {
-            PexelsAPI.fetchRandomProfileImage { imageURL in
-                if let imageURL = imageURL {
-                    profileImageURL = imageURL
-                    imageLoader.loadImage(from: imageURL)
-                }
+        // Always fetch a new random image
+        PexelsAPI.fetchRandomProfileImage { imageURL in
+            if let imageURL = imageURL {
+                // Save the selected profile picture URL in UserDefaults
+                savedProfileImageURL = imageURL
+                
+                // Load the image using the ImageLoader
+                imageLoader.loadImage(from: imageURL)
             }
         }
+    }
+
 }
 
 

@@ -152,6 +152,7 @@ struct ChatView: View {
                         }
                     }
                 }
+                             
             }
             .listStyle(.plain)
            

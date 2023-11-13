@@ -19,6 +19,7 @@ struct HomeView: View {
     @Binding var contacts: [String]
     @State private var isChoreDetailPresented = false
     @State private var choreDetailContact: String = ""
+    
 
     var body: some View {
         NavigationView {
