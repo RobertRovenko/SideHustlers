@@ -11,6 +11,13 @@ Save your time for something more important and allow others to take care of you
 Hustlers: Become a hustler today and make cold hard cash by helping out your community! See something you think you can do? Contact the maker and find out!
 Its completely free to download and use the app! Start looking for some chores today, or maybe you have something you want to advertize? 
 
+Real Time Messaging System
+Secure Authentication 
+Dark And Light Theme
+Firestore Database with chores
+Customizable profile picture with API
+Apple Map to find work near you
+
 <img src="https://github.com/RobertRovenko/SideHustlers/assets/32544623/84afa28b-8548-46d6-98da-2d0e53dd1142" width="200" alt="Screenshot 9">
 <img src="https://github.com/RobertRovenko/SideHustlers/assets/32544623/4c15e14e-e9b0-4c9b-9942-e1a02cf2f022" width="200" alt="Screenshot 8">
 <img src="https://github.com/RobertRovenko/SideHustlers/assets/32544623/8859c7bf-0f18-4113-bc5e-13f8e4095206" width="200" alt="Screenshot 10">
@@ -22,5 +29,7 @@ Its completely free to download and use the app! Start looking for some chores t
 <img src="https://github.com/RobertRovenko/SideHustlers/assets/32544623/52803e3b-6a78-4d5b-88d1-c36ef51c3be3" width="200" alt="Screenshot 2">
 <img src="https://github.com/RobertRovenko/SideHustlers/assets/32544623/a4569b3c-ca64-46a3-9e90-b009d8d80580" width="200" alt="Screenshot 1">
 <img src="https://github.com/RobertRovenko/SideHustlers/assets/32544623/5a1eb55c-8e7a-4419-9eea-6008c349d703" width="200" alt="Screenshot 11">
+<img src="https://github.com/RobertRovenko/SideHustlers/assets/32544623/e49d008d-4037-4664-809e-dcd349bb302e" width="200" alt="Screenshot 12">
+<img src="https://github.com/RobertRovenko/SideHustlers/assets/32544623/e49d008d-4037-4664-809e-dcd349bb302e" width="200" alt="Screenshot 13">
 
 
