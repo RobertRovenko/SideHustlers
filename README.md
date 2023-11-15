@@ -11,11 +11,17 @@ Save your time for something more important and allow others to take care of you
 Hustlers: Become a hustler today and make cold hard cash by helping out your community! See something you think you can do? Contact the maker and find out!
 Its completely free to download and use the app! Start looking for some chores today, or maybe you have something you want to advertize? 
 
-Real Time Messaging System
-Secure Authentication 
-Dark And Light Theme
-Firestore Database with chores
-Customizable profile picture with API
+Real Time Messaging System, 
+
+Secure Authentication, 
+
+
+Dark And Light Theme, 
+
+Firestore Database with chores, 
+
+Customizable profile picture with API, 
+
 Apple Map to find work near you
 
 <img src="https://github.com/RobertRovenko/SideHustlers/assets/32544623/84afa28b-8548-46d6-98da-2d0e53dd1142" width="200" alt="Screenshot 9">
