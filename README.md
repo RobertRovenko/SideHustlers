@@ -36,6 +36,6 @@ Apple Map to find work near you
 <img src="https://github.com/RobertRovenko/SideHustlers/assets/32544623/a4569b3c-ca64-46a3-9e90-b009d8d80580" width="200" alt="Screenshot 1">
 <img src="https://github.com/RobertRovenko/SideHustlers/assets/32544623/5a1eb55c-8e7a-4419-9eea-6008c349d703" width="200" alt="Screenshot 11">
 <img src="https://github.com/RobertRovenko/SideHustlers/assets/32544623/e49d008d-4037-4664-809e-dcd349bb302e" width="200" alt="Screenshot 12">
-<img src="https://github.com/RobertRovenko/SideHustlers/assets/32544623/e49d008d-4037-4664-809e-dcd349bb302e" width="200" alt="Screenshot 13">
+
 
 
